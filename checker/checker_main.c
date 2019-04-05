@@ -13,26 +13,37 @@
 #include "libft.h"
 #include "checker.h"
 
-t_list	*printlist(t_list *lst)
+int check_sort(t_mngr *mngr)
 {
-	ft_printf("%d\n", *((int*)lst->content));
-	return (lst);
+	t_list *lst;
+
+	if (mngr->stk[1]->lst)
+		return (0);
+	lst = mngr->stk[0]->lst;
+	while (lst->next && (int)lst->content < (int)lst->next->content)
+		lst = lst->next;
+	if (lst->next)
+		return (0);
+	return (1);
 }
 
 int main(int ac, char **av)
 {
-	t_stk	*stk;
+	t_mngr	mngr;
 
 	if (ac == 1)
 		checker_error(NULL, NO_ARG);
 	else
-		stk = parse_args(ac, av);
-	ft_lstmap(stk->a, printlist);
-	parse_commands(stk);
-//	if (check_sort(stk))
-//		ft_printf("OK\n");
-//	else
-//		ft_printf("KO\n");
+		parse_args(ac, av, &mngr);
+	mngr.dbg = 1;
+	mngr.col = 1;
+	mngr.n_cmd = 0;
+	draw_stacks(&mngr);
+	parse_commands(&mngr);
+	if (check_sort(&mngr))
+		ft_printf("{Green}OK{eof}\n");
+	else
+		ft_printf("{Red}KO{eof}\n");
 	return (0);
 }
 

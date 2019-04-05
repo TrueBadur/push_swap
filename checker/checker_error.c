@@ -20,14 +20,16 @@
  * Prints error message to stderror, cleans up and exit the program
  */
 
-void checker_error(t_stk *stk, int err)
+void checker_error(t_mngr *mngr, int err)
 {
+	//TODO make cleanup
+	ft_fdprintf(STDERR_FILENO, "Error\n");
 	if (err == NO_ARG)
-		ft_fdprintf(STDERR_FILENO, "Error\n%s\n", NO_ARG_MSG);
+		ft_fdprintf(STDERR_FILENO, "%s\n", NO_ARG_MSG);
 	if (err == STR_ARG)
-		ft_fdprintf(STDERR_FILENO, "Error\n%s\n", STR_ARG_MSG);
+		ft_fdprintf(STDERR_FILENO, "%s\n", STR_ARG_MSG);
 	if (err == INT_OVERFLOW_ARG)
-		ft_fdprintf(STDERR_FILENO, "Error\n%s\n", INT_OVERFLOW_MSG);
+		ft_fdprintf(STDERR_FILENO, "%s\n", INT_OVERFLOW_MSG);
 //	if (stk)
 //		cleanup(stk);
 	exit(err);

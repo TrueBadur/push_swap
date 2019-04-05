@@ -18,14 +18,24 @@
 # define INT_OVERFLOW_MSG "One or more of the arguments doesn't fit in int"
 
 # include "libft.h"
+# include <fcntl.h>
 
 typedef struct	s_stacks
 {
-	t_list	*a;
-	t_list	*b;
-	t_list	*a_end;
-	t_list	*b_end;
+	t_list	*lst;
+	t_list	*l_e;
+	size_t	lst_size;
 }				t_stk;
+
+typedef struct s_mngr
+{
+	t_stk	*stk[2];
+	char	col;
+	char 	dbg;
+	char	*l_cmd;
+	unsigned n_cmd;
+	int 		fd;
+}				t_mngr;
 
 enum	e_errors
 {
@@ -35,10 +45,32 @@ enum	e_errors
 	DUPLICTATE_ARG,
 	NOT_EXIST_INSTR,
 	WRONG_INSTR,
+	INTERNAL_ERROR,
+	MEMORY_ALLOC_FAIL,
 };
 
-void checker_error(t_stk *stk, int err);
-t_stk	*parse_args(int ac, char **av);
-void	parse_commands(t_stk *stk);
+enum 	e_ops
+{
+	SWP_A = 2,
+	SWP_B,
+	SWP_S,
+	PSH_A = 12,
+	PSH_B,
+	ROT_A = 22,
+	ROT_B,
+	ROT_R,
+	RROT_A = 32,
+	RROT_B,
+	RROT_R
+};
+
+void checker_error(t_mngr *mngr, int err);
+void *parse_args(int ac, char **av, t_mngr *mngr);
+void	parse_commands(t_mngr *mngr);
+char	cmd_swap(t_mngr *mngr, char *str);
+char	cmd_rotate(t_mngr *mngr, char *str);
+char	cmd_push(t_mngr *mngr, char *str);
+void	draw_stacks(t_mngr *mngr);
+
 
 #endif //PUSH_SWAP_CHECKER_H
