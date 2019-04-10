@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
+#include "push_swap.h"
 
 
 void	parse_commands(t_mngr *mngr)
@@ -29,7 +29,6 @@ void	parse_commands(t_mngr *mngr)
 			return ;
 		else
 			checker_error(mngr, NOT_EXIST_INSTR);
-		mngr->n_cmd++;
 		if (mngr->dbg)
 			draw_stacks(mngr);
 	}

@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "checker.h"
+#include "push_swap.h"
 
 int check_sort(t_mngr *mngr)
 {
