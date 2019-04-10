@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
+#include "push_swap.h"
 
 static void	pushfirst(t_stk *from, t_stk *to, t_mngr *mngr)
 {
@@ -30,6 +30,7 @@ static void	pushfirst(t_stk *from, t_stk *to, t_mngr *mngr)
 
 char		cmd_push(t_mngr *mngr, char *str)
 {
+	mngr->n_cmd++;
 	if (*str == 'a')
 		pushfirst(mngr->stk[1], mngr->stk[0], mngr);
 	else if (*str == 'b')

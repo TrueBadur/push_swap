@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker/checker.h"
+#include "push_swap.h"
 
 
 void	printlist(t_list *lst)

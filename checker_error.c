@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
+#include "push_swap.h"
 
 /*
  *
@@ -26,10 +26,12 @@ void checker_error(t_mngr *mngr, int err)
 	ft_fdprintf(STDERR_FILENO, "Error\n");
 	if (err == NO_ARG)
 		ft_fdprintf(STDERR_FILENO, "%s\n", NO_ARG_MSG);
-	if (err == STR_ARG)
+	else if (err == STR_ARG)
 		ft_fdprintf(STDERR_FILENO, "%s\n", STR_ARG_MSG);
-	if (err == INT_OVERFLOW_ARG)
+	else if (err == INT_OVERFLOW_ARG)
 		ft_fdprintf(STDERR_FILENO, "%s\n", INT_OVERFLOW_MSG);
+	else if (err == DUPLICTATE_ARG)
+		ft_fdprintf(STDERR_FILENO, "%s\n", DUP_ARG_MSG);
 //	if (stk)
 //		cleanup(stk);
 	exit(err);

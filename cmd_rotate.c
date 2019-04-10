@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
+#include "push_swap.h"
 
 static t_stk * rot_f(t_stk *stk, t_mngr *mngr)
 {
@@ -48,14 +48,15 @@ char		cmd_rotate(t_mngr *mngr, char *str)
 {
 	char	r;
 
-	r = *str == 'r' ? 1 : 0;
+	mngr->n_cmd++;
+	r = *str == 'r' && *(str + 1) ? 1 : 0;
 	str += r;
-	if (*str == 'a' || *str == 'b' || *str == 's')
+	if (*str == 'a' || *str == 'b' || *str == 'r')
 	{
-		if (*str == 'a' || *str == 's')
+		if (*str == 'a' || *str == 'r')
 			mngr->stk[0] = r ? rot_r(mngr->stk[0], mngr) :
 					rot_f(mngr->stk[0], mngr);
-		if (*str == 'b' || *str == 's')
+		if (*str == 'b' || *str == 'r')
 			mngr->stk[1] = r ? rot_r(mngr->stk[1], mngr) :
 					rot_f(mngr->stk[1], mngr);
 	}
@@ -63,5 +64,5 @@ char		cmd_rotate(t_mngr *mngr, char *str)
 		checker_error(mngr, NOT_EXIST_INSTR);
 	if (*(str + 1))
 		checker_error(mngr, NOT_EXIST_INSTR);
-	return (ROT_A * !r + RROT_A * r + 2 * (*str == 's') + (*str == 'b'));
+	return (ROT_A * !r + RROT_A * r + 2 * (*str == 'r') + (*str == 'b'));
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
+#include "push_swap.h"
 
 static t_stk	*swp_first(t_stk *stk, t_mngr *mngr)
 {
@@ -31,6 +31,7 @@ static t_stk	*swp_first(t_stk *stk, t_mngr *mngr)
 
 char		cmd_swap(t_mngr *mngr, char *str)
 {
+	mngr->n_cmd++;
 	if (*str == 'a' || *str == 'b' || *str == 'r')
 	{
 		if (*str == 'a' || *str == 'r')

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker/checker.h"
+#include "push_swap.h"
 #include <limits.h>
 
 static t_list *ins_to_stk(t_stk *stk, char *str, char mode, t_mngr *mngr)
@@ -24,7 +24,11 @@ static t_list *ins_to_stk(t_stk *stk, char *str, char mode, t_mngr *mngr)
 	lst = stk->lst;
 	while (lst)
 		if ((int) lst->content == tmp || (int)(lst = lst->next) * 0)
+		{
+			ft_printf("%d %d\n",tmp, lst->content);
 			checker_error(mngr, DUPLICTATE_ARG);
+
+		}
 	stk->lst_size++;
 	if (mode)
 	{
@@ -40,37 +44,46 @@ static t_list *ins_to_stk(t_stk *stk, char *str, char mode, t_mngr *mngr)
 	return (stk->lst);
 }
 
-static void	parse_nums(t_mngr *mngr, int ac, char **av)
+static void	parse_nums(t_mngr *mngr, int ac, char **a)
 {
 	mngr->stk[0]->lst = NULL;
 	if (ac == 0)
 	{
-		while (*av)
-			if (!(mngr->stk[0]->lst = ins_to_stk(mngr->stk[0], *(av++), 1, mngr)))
+		while (*a)
+			if (!(mngr->stk[0]->lst = ins_to_stk(mngr->stk[0], *(a++), 1, mngr)))
 				checker_error(mngr, MEMORY_ALLOC_FAIL);
 	}
 	else
 		while (ac-- > 1)
-			if (!(mngr->stk[0]->lst = ins_to_stk(mngr->stk[0], av[ac], 0, mngr)))
+			if (!(mngr->stk[0]->lst = ins_to_stk(mngr->stk[0], a[ac], 0, mngr)))
 				checker_error(mngr, MEMORY_ALLOC_FAIL);
 }
 
-void *parse_args(int ac, char **av, t_mngr *mngr)
+void parse_args(int ac, char **av, t_mngr *mngr)
 {
 	t_stk	*stk;
+	int 	fd;
+	char	*str;
 
 	if (!(stk = malloc(sizeof(t_stk))))
 		checker_error(mngr, MEMORY_ALLOC_FAIL);
 	ft_bzero(stk, sizeof(t_stk));
 	if (!(mngr->stk[1] = malloc(sizeof(t_stk))))
-		checker_error(mngr, INTERNAL_ERROR);
-	ft_bzero(mngr->stk[1], sizeof(t_mngr));
+		checker_error(mngr, MEMORY_ALLOC_FAIL);
+	ft_bzero(mngr->stk[1], sizeof(t_stk));
 	mngr->stk[0] = stk;
 	if (ac == 2)
 	{
-		av = ft_strsplit(av[1], ' ');
+		if ((fd = open(av[1], O_RDONLY)) > 0)
+		{
+			get_next_line(fd, &str);
+			close(fd);
+		}
+		else
+			str = av[1];
+		str = (char*)ft_strsplit(str, ' ');
 		ac = 0;
-		parse_nums(mngr, ac, av);
+		parse_nums(mngr, ac, (char**)str);
 	}
 	else
 		parse_nums(mngr, ac, av);
