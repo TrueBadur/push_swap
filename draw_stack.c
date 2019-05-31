@@ -15,7 +15,7 @@
 
 void	printlist(t_list *lst)
 {
-	ft_printf("{Green}%-12d{eof}\n", (int)lst->content);
+	ft_printf("{Green}%-12d{eof}\n", (int)lst->data);
 }
 
 void	draw_stacks(t_mngr *mngr)
@@ -25,6 +25,8 @@ void	draw_stacks(t_mngr *mngr)
 	unsigned 	i;
 
 	//TODO wrap long lists
+	if (!mngr->dbg)
+		return ;
 	a = mngr->stk[0]->lst;
 	ft_printf("--------------------------------------------------------\n");
 	if (mngr->dbg == 1)
@@ -41,17 +43,17 @@ void	draw_stacks(t_mngr *mngr)
 		while (a || b)
 		{
 			if ((mngr->dbg - SWP_A) % 10 == 0 || (mngr->dbg - SWP_S) % 10 == 0)
-				if (i == 0 || (i == 1 && mngr->dbg < 10) || (i == mngr->stk[0]->lst_size - 1 && mngr->dbg > 20))
+				if (i == 0 || (i == 1 && mngr->dbg < 10) || (i == mngr->stk[0]->lst_s - 1 && mngr->dbg > 20))
 					ft_printf("{Red}");
 			if (a)
-				ft_printf("%-12d{eof}   ", (int) a->content);
+				ft_printf("%-12d{eof}   ", (int) a->data);
 			else
 				ft_printf("%15c", ' ');
 			if ((mngr->dbg - SWP_B) % 10 == 0 || (mngr->dbg - SWP_S) % 10 == 0)
-				if (i == 0 || (i == 1 && mngr->dbg < 10) || (i == mngr->stk[1]->lst_size - 1 && mngr->dbg > 20))
+				if (i == 0 || (i == 1 && mngr->dbg < 10) || (i == mngr->stk[1]->lst_s - 1 && mngr->dbg > 20))
 					ft_printf("{Red}");
 			if (b)
-				ft_printf("%-12d{eof}\n", (int) b->content);
+				ft_printf("%-12d{eof}\n", (int) b->data);
 			else
 				ft_printf("\n");
 			i++;
@@ -61,5 +63,5 @@ void	draw_stacks(t_mngr *mngr)
 	}
 	ft_printf("{Green}____________   {Red}____________{eof}\n");
 	ft_printf("      {Green}A              {Red}B     {eof}\n");
-	mngr->dbg = 1;
+	mngr->dbg = 2;
 }

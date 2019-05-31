@@ -19,7 +19,7 @@ int check_sort(t_mngr *mngr)
 	if (mngr->stk[1]->lst)
 		return (0);
 	lst = mngr->stk[0]->lst;
-	while (lst->next && (int)lst->content < (int)lst->next->content)
+	while (lst->next && (int)lst->data < (int)lst->next->data)
 		lst = lst->next;
 	if (lst->next)
 		return (0);

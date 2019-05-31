@@ -22,7 +22,7 @@ static t_stk	*swp_first(t_stk *stk, t_mngr *mngr)
 	stk->lst->next = stk->lst->next->next;
 	tmp->next = stk->lst;
 	stk->lst = tmp;
-	if (stk->lst_size == 2)
+	if (stk->lst_s == 2)
 		stk->l_e = stk->lst->next;
 	return (stk);
 }
@@ -43,5 +43,8 @@ char		cmd_swap(t_mngr *mngr, char *str)
 		checker_error(mngr, NOT_EXIST_INSTR);
 	if (*(str + 1))
 		checker_error(mngr, NOT_EXIST_INSTR);
-	return (SWP_A + (*str == 'b') + 2 * (*str == 'r'));
+	mngr->dbg *= SWP_A + (*str == 'b') + 2 * (*str == 'r');
+	if (mngr->dbg)
+		draw_stacks(mngr);
+	return (mngr->dbg);
 }

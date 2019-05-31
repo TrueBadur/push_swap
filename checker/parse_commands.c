@@ -24,7 +24,7 @@ void	parse_commands(t_mngr *mngr)
 		else if (*mngr->l_cmd == 'p')
 			mngr->dbg *= cmd_push(mngr, mngr->l_cmd + 1);
 		else if (*mngr->l_cmd == 'r')
-			mngr->dbg *= cmd_rotate(mngr, mngr->l_cmd + 1);
+			mngr->dbg *= cmd_rotate(mngr, mngr->l_cmd + 1, 0);
 		else if (*mngr->l_cmd == '\0')
 			return ;
 		else

@@ -12,19 +12,7 @@
 
 #include "push_swap.h"
 
-int check_sort(t_mngr *mngr)
-{
-	t_list *lst;
 
-	if (mngr->stk[1]->lst)
-		return (0);
-	lst = mngr->stk[0]->lst;
-	while (lst->next && (int)lst->content < (int)lst->next->content)
-		lst = lst->next;
-	if (lst->next)
-		return (0);
-	return (1);
-}
 
 int main(int ac, char **av)
 {
@@ -34,14 +22,21 @@ int main(int ac, char **av)
 		checker_error(NULL, NO_ARG);
 	else
 		parse_args(ac, av, &mngr);
-	if (check_sort(&mngr))
+	mngr.vec = ft_vecinit(mngr.stk[0]->lst_s);
+	ft_avltovec(mngr.s_arr, mngr.vec);
+	mngr.s_arr = ft_avlfree(mngr.s_arr);
+	if (check_sort(mngr.stk[0], ASC, 1) && !mngr.stk[1]->lst)
 		return (0);
+	set_sort(mngr.stk[0], ASC, mngr.stk[0]->max);
+	mngr.stk[0]->piv = ((int*)(mngr.vec->data))[(mngr.stk[0]->lst_s - 1) / 2];
+	mngr.stk[0]->max = ((int*)(mngr.vec->data))[mngr.stk[0]->lst_s - 1];
+	mngr.stk[0]->min = ((int*)(mngr.vec->data))[0];
 	mngr.dbg = 1;
 	mngr.col = 1;
 	mngr.n_cmd = 0;
 	draw_stacks(&mngr);
 	gen_commands(&mngr);
 	ft_printf("Total operations = %d\n", mngr.n_cmd);
-	return (0);
+	return (check_sort(mngr.stk[0], ASC, 1) && !mngr.stk[1]->lst);
 }
 

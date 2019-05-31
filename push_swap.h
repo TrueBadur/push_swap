@@ -20,13 +20,19 @@
 
 
 # include <fcntl.h>
+#include <limits.h>
 # include "libft.h"
 
 typedef struct	s_stacks
 {
 	t_list	*lst;
 	t_list	*l_e;
-	size_t	lst_size;
+	int		lst_s;
+	int		sq_l;
+	int 	sort;
+	int		piv;
+	int		min;
+	int 	max;
 }				t_stk;
 
 typedef struct s_mngr
@@ -37,11 +43,10 @@ typedef struct s_mngr
 	char		*l_cmd;
 	unsigned	n_cmd;
 	t_btavl		*s_arr;
-	int 		min;
-	int 		max;
+	t_vector	*vec;
 }				t_mngr;
 
-enum 	e_ops
+typedef enum 	e_ops
 {
 	SWP_A = 2,
 	SWP_B,
@@ -54,7 +59,26 @@ enum 	e_ops
 	RROT_A = 32,
 	RROT_B,
 	RROT_R
-};
+}				t_eops;
+
+typedef enum 	e_dir
+{
+	ASC = -1,
+	DESC = 1,
+	EQ,
+	EMPTY,
+	ONE_EL
+}				t_edir;
+
+typedef enum	e_swap_opts
+{
+	STD,
+	A_ONL,
+	B_ONL,
+	BOTH_ONL,
+	A_OR_BOTH,
+	B_OR_BOTH
+}				t_eswopt;
 
 enum	e_errors
 {
@@ -73,11 +97,24 @@ void	parse_args(int ac, char **av, t_mngr *mngr);
 void	draw_stacks(t_mngr *mngr);
 void	gen_commands(t_mngr *mngr);
 char	cmd_swap(t_mngr *mngr, char *str);
-char	cmd_rotate(t_mngr *mngr, char *str);
-char	cmd_push(t_mngr *mngr, char *str);
+char cmd_rotate(t_mngr *mng, char *str, int dir);
+char	cmd_push(t_mngr *mngr, const char *str);
 void	parse_commands(t_mngr *mngr);
 void	bin_merge(t_mngr *mngr);
 void	split_stack(t_mngr *mngr);
 void	double_bouble(t_mngr *mngr);
+t_edir 	cmp_first_two(t_list *lst);
+int		val_to_place_dir_exist(t_stk *stk, int val, int place);
+int check_sort(t_stk *stk, t_edir dir, int fin);
+void	set_sort_both(t_mngr *mngr);
+void set_sort(t_stk *stk, t_edir dir, int val);
+void smart_swap(t_mngr *mngr);
+void	safe_rotate(t_mngr *mngr, char c);
+int	get_sort(t_mngr *mngr);
+void set_sort(t_stk *stk, t_edir dir, int val);
+void safe_swap(t_mngr *mngr, t_eswopt mode, int piv);
+t_stk * rot_f(t_stk *stk, t_mngr *mngr);
+t_stk *rot_r(t_stk *stk, t_mngr *mngr);
+int val_to_place_dir_nexis(t_stk *stk, int val);
 
 #endif //PUSH_SWAP_PUSH_SWAP_MAIN_H
