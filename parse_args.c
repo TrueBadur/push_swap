@@ -56,18 +56,25 @@ static void	parse_nums(t_mngr *mngr, int ac, char **a)
 			if (!(mngr->stk[0]->lst = ins_to_stk(mngr->stk[0], a[ac], 0, mngr)))
 				checker_error(mngr, MEMORY_ALLOC_FAIL);
 }
-
-void parse_args(int ac, char **av, t_mngr *mngr)
+void init_stacks(t_mngr *mngr)
 {
-	int 	fd;
-	char	*str;
-
 	if (!(mngr->stk[0] = malloc(sizeof(t_stk))))
 		checker_error(mngr, MEMORY_ALLOC_FAIL);
 	ft_bzero(mngr->stk[0], sizeof(t_stk));
 	if (!(mngr->stk[1] = malloc(sizeof(t_stk))))
 		checker_error(mngr, MEMORY_ALLOC_FAIL);
 	ft_bzero(mngr->stk[1], sizeof(t_stk));
+}
+
+void parse_args(int ac, char **av, t_mngr *mngr)
+{
+	int 	fd;
+	char	*str;
+
+	init_stacks(mngr);
+	// if some flags are given they have to be first
+//	if (**av == '-')
+		//parse flags here
 	if (ac == 2)
 	{
 		if ((fd = open(av[1], O_RDONLY)) > 0)
