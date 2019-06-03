@@ -176,11 +176,16 @@ int val_to_place_dir_nexis(t_stk *stk, int val)
 	int		i;
 	t_list	*lst;
 
-	i = 0;
 	lst = stk->lst;
+
+	i = 0;
 	while (lst->next)
 	{
-		if (((int)lst->data < val && (int)lst->next->data > val) || ((int)lst->data == stk->min))
+		if ((val < stk->min && (int)lst->data == stk->min) ||
+			(val > stk->max && (int)lst->data == stk->min) ||
+			((int)lst->data > val && (int)stk->l_e->data < val))
+			break;
+		else if ((int)lst->data < val && (int)lst->next->data > val)
 		{
 			i++;
 			break ;
