@@ -14,96 +14,38 @@
 
 void  split_stack_opt(t_mngr *mngr)
 {
-	t_list *i;
-
 	while (!check_sort(mngr->stk[0], ASC, 0) && mngr->stk[0]->lst_s > 3)
 		ft_printf("pb\n", mngr->dbg *= cmd_push(mngr, "b"));
 	if (!check_sort(mngr->stk[0], ASC, 0))
 		ft_printf("sa\n", cmd_swap(mngr, "a"));
 }
 
-t_stk *stk_copy(t_stk *stk)
-{
-	t_stk *stk_c;
-	t_list *tmp;
-
-	if (!(stk_c = malloc(sizeof(t_stk))))
-		return NULL;
-	ft_memcpy(stk_c, stk, sizeof(t_stk));
-	stk_c->lst = ft_lstcopy(stk->lst);
-	tmp = stk_c->lst;
-	while (tmp->next)
-		tmp = tmp->next;
-	stk_c->l_e = tmp;
-	return (stk_c);
-}
-
-void stk_del(t_stk *stk)
-{
-	ft_lstdel(&stk->lst, NULL);
-	free(stk);
-}
-
-t_vector *get_ops_seq(t_stk *stk_c, int num, t_mngr *mngr, t_vector *vec)
+t_vector *get_ops_seq(t_stk *stk_c, int num, t_vector *vec)
 {
 	int t;
 	int i;
 	int col_cn;
 
 	col_cn = 1;
-	if (num > stk_c->max || num < stk_c->min)
+	i = val_to_place_dir_nexis(stk_c, num);
+	while (i)
 	{
-		i = val_to_place_dir_exist(stk_c, stk_c->min, 0);
-		while (i)
-		{
-			int l = (int)((char*)vec->data)[vec->len - sizeof(int) * col_cn];
-			if (l == ((i < 0) ? RROT_B : ROT_B))
+//		collapse_seq(vec);
+		int l = col_cn * sizeof(int) > vec->len ? 0 : (int)((char*)vec->data)[vec->len - sizeof(int) * col_cn];
+		if (l == ((i < 0) ? RROT_B : ROT_B))
 //			if (((int*)vec->data)[vec->len - sizeof(int) * col_cn] == (i < 0) ? RROT_B : ROT_B)
-			{
-				col_cn++;
-				ft_vecremove(vec, vec->len - sizeof(int), sizeof(int));
-				t = (i < 0) ? RROT_R : ROT_R;
-			}
-			else
-				t = (i < 0) ? RROT_A : ROT_A;
-			ft_vecpush(vec, &t, sizeof(int));
-			i += i < 0 ? 1 : -1;
+		{
+			ft_vecremove(vec, vec->len - sizeof(int) * col_cn, sizeof(int));
+			col_cn++;
+			t = (i < 0) ? RROT_R : ROT_R;
 		}
-		t = PSH_A;
+		else
+			t = (i < 0) ? RROT_A : ROT_A;
 		ft_vecpush(vec, &t, sizeof(int));
+		i += i < 0 ? 1 : -1;
 	}
-	else
-	{
-		i = val_to_place_dir_nexis(stk_c, num);
-		while (i)
-		{
-			if ((num < (int) stk_c->lst->data &&
-				 num > (int) stk_c->l_e->data) ||
-				(num > stk_c->max && (int) stk_c->lst->data == stk_c->min) ||
-				(num < stk_c->min && (int) stk_c->l_e->data == stk_c->max)) //todo remove redundant ifs
-			{
-				t = PSH_A;
-				ft_vecpush(vec, &t, sizeof(int));
-				break;
-			}
-			else
-			{
-				int l = (int)((char*)vec->data)[vec->len - sizeof(int) * col_cn];
-				if (l == (i > 0 ? ROT_B : RROT_B))
-//			if (((int*)vec->data)[vec->len - sizeof(int) * col_cn] == (i < 0) ? RROT_B : ROT_B)
-				{
-					col_cn++;
-					ft_vecremove(vec, vec->len - sizeof(int), sizeof(int));
-					t = i > 0 ? ROT_R : RROT_R;
-				}
-				else
-					t = i > 0 ? ROT_A : RROT_A;
-				stk_c = i > 0 ? rot_f(stk_c, mngr) : rot_r(stk_c, mngr);
-				ft_vecpush(vec, &t, sizeof(int));
-			}
-		}
-		stk_del(stk_c);
-	}
+	t = PSH_A;
+	ft_vecpush(vec, &t, sizeof(int));
 	return (vec);
 }
 
@@ -153,9 +95,6 @@ int get_stk_n(t_stk *stk, t_vector **vec, int i)
 
 t_vector *find_shortest(t_mngr *mngr)
 {
-	//starting from first el in b stack then second then last, then third,
-	// then prelast and so on. count how many moves it is needed to place this el
-	// in place in a stack, get the shortest
 	t_vector *vec;
 	t_vector *vec_t;
 	unsigned count;
@@ -171,7 +110,7 @@ t_vector *find_shortest(t_mngr *mngr)
 		tmp = get_stk_n(mngr->stk[1], &vec_t, i++);
 		if (vec_t->len / sizeof(int) >= count)
 			break ;
-		vec_t = get_ops_seq(stk_copy(mngr->stk[0]), tmp, mngr, vec_t);
+		vec_t = get_ops_seq(mngr->stk[0], tmp, vec_t);
 		if (vec_t->len / sizeof(int) < count)
 		{
 			count = vec_t->len / sizeof(int);
@@ -179,15 +118,10 @@ t_vector *find_shortest(t_mngr *mngr)
 				ft_vecdel(&vec);
 			vec = vec_t;
 		}
-//		else if (vec_t->len / sizeof(int) == count)
-//		{
-//			//run find_shortest (or some equivalent) on copy of the current mngr
-//			// with evaluated seq to find out which one is more effective
-//		}
 		else
 			ft_vecdel((void **)&vec_t);
 	}
-	//todo remove vec_t
+	ft_vecdel((void **)&vec_t);
 	return vec;
 }
 
@@ -227,23 +161,6 @@ void eval_seq(t_vector *vec, t_mngr *mngr)
 	}
 }
 
-void collapse_seq(t_vector *seq)
-{
-	int len;
-	int i;
-	int *iseq;
-
-	len = seq->len / 4;
-	i = 0;
-	iseq = (int*)seq->data;
-	ft_printf("Sequence is:\n");
-	while (i < len)
-	{
-		ft_printf("--%d++ ", iseq[i]);
-		i++;
-	}
-}
-
 void insert_sort(t_mngr *mngr)
 {
 	t_vector *vec;
@@ -252,23 +169,21 @@ void insert_sort(t_mngr *mngr)
 	{
 		vec = find_shortest(mngr);
 		// check if seq may be simplified
-		collapse_seq(vec);
 		eval_seq(vec, mngr);
 		ft_vecdel((void**)&vec);
 	}
-}
-
-void select_opt(t_mngr *mngr)
-{
-	split_stack_opt(mngr);
-	insert_sort(mngr);
-
+	int i = val_to_place_dir_exist(mngr->stk[0], mngr->stk[0]->min, 0);
+	while (i)
+	{
+		safe_rotate(mngr, 'r');
+		safe_rotate(mngr, '\0');
+		i += i < 0 ? 1 : -1;
+	}
 }
 
 void gen_commands(t_mngr *mngr)
 {
-	//check for size to choose algo
-//	bin_merge(mngr);
+	split_stack_opt(mngr);
+	insert_sort(mngr);
 //	double_bouble(mngr);
-	select_opt(mngr);
 }
