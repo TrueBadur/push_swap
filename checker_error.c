@@ -12,17 +12,25 @@
 
 #include "push_swap.h"
 
+
+void stk_del(t_stk *stk)
+{
+	if (!stk)
+		return ;
+	ft_lstdel(&stk->lst, NULL);
+	free(stk);
+}
+
 /*
  *
  * @param stk - main t_stk which will be cleaned before exit or NULL
  * @param err - number of error from e_errors enum
  *
- * Prints error message to stderror, cleans up and exit the program
+ * Prints error message to stderror, clean up and exit the program
  */
 
 void checker_error(t_mngr *mngr, int err)
 {
-	//TODO make cleanup
 	ft_fdprintf(STDERR_FILENO, "Error\n");
 	if (err == NO_ARG)
 		ft_fdprintf(STDERR_FILENO, "%s\n", NO_ARG_MSG);
@@ -32,7 +40,11 @@ void checker_error(t_mngr *mngr, int err)
 		ft_fdprintf(STDERR_FILENO, "%s\n", INT_OVERFLOW_MSG);
 	else if (err == DUPLICTATE_ARG)
 		ft_fdprintf(STDERR_FILENO, "%s\n", DUP_ARG_MSG);
-//	if (stk)
-//		cleanup(stk);
+	stk_del(mngr->stk[0]);
+	stk_del(mngr->stk[1]);
+	free(mngr->l_cmd);
+	ft_avlfree(mngr->s_arr);
+	ft_vecdel((void**)&mngr->vec);
+
 	exit(err);
 }
