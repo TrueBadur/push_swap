@@ -18,10 +18,11 @@ int main(int ac, char **av)
 {
 	t_mngr	mngr;
 
+	ft_bzero(&mngr, sizeof(mngr));
 	if (ac == 1)
 		checker_error(NULL, NO_ARG);
 	else
-		parse_args(ac, av, &mngr);
+		parse_args(ac, av, &mngr); //TODO parse - arguments
 	mngr.vec = ft_vecinit(mngr.stk[0]->lst_s);
 	ft_avltovec(mngr.s_arr, mngr.vec);
 	mngr.s_arr = ft_avlfree(mngr.s_arr);
