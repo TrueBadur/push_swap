@@ -44,7 +44,7 @@ t_stk *rot_r(t_stk *stk, t_mngr *mngr)
 	return (stk);
 }
 
-char cmd_rotate(t_mngr *mng, char *str, int dir)
+char cmd_rotate(t_mngr *mng, const char *str, int dir)
 {
 	char	r;
 
@@ -71,4 +71,28 @@ char cmd_rotate(t_mngr *mng, char *str, int dir)
 	if (mng->dbg)
 		draw_stacks(mng);
 	return (mng->dbg);
+}
+
+void	rotate(t_mngr *mngr, t_eops cmd)
+{
+	if (cmd < RROT_A)
+	{
+		if (cmd == ROT_R)
+			ft_printf("rr\n", cmd_rotate(mngr, "r", 0));
+		else
+		{
+			ft_printf(cmd == ROT_A ? "ra\n" : "rb\n");
+			cmd_rotate(mngr, cmd == ROT_A ? "a" : "b", 0);
+		}
+	}
+	else
+	{
+		if (cmd == RROT_R)
+			ft_printf("rrr\n", cmd_rotate(mngr, "rr", 0));
+		else
+		{
+			ft_printf(cmd == RROT_A ? "rra\n" : "rrb\n");
+			cmd_rotate(mngr, cmd == RROT_A ? "ra" : "rb", 0);
+		}
+	}
 }

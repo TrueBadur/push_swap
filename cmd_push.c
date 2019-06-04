@@ -77,3 +77,9 @@ char		cmd_push(t_mngr *mngr, const char *str)
 		draw_stacks(mngr);
 	return (mngr->dbg);
 }
+
+void		push(t_mngr *mngr, t_eops cmd)
+{
+	ft_printf(cmd == PSH_A ? "sa\n" : "sb\n");
+	cmd_push(mngr, cmd == PSH_A ? "a" : "b");
+}
