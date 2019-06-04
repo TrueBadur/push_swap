@@ -21,6 +21,12 @@ void stk_del(t_stk *stk)
 	free(stk);
 }
 
+void help()
+{
+	ft_printf("Usage:\n./pushswap [-(file|debug|vis|color|bubble)]"
+			  "('number_to_be_sorted')|(numbers to be sorted)\n");
+}
+
 /*
  *
  * @param stk - main t_stk which will be cleaned before exit or NULL
@@ -31,7 +37,10 @@ void stk_del(t_stk *stk)
 
 void checker_error(t_mngr *mngr, int err)
 {
-	ft_fdprintf(STDERR_FILENO, "Error\n");
+	if (err != HELP_CALL)
+		ft_fdprintf(STDERR_FILENO, "Error\n");
+	else
+		help();
 	if (err == NO_ARG)
 		ft_fdprintf(STDERR_FILENO, "%s\n", NO_ARG_MSG);
 	else if (err == STR_ARG)
@@ -45,6 +54,5 @@ void checker_error(t_mngr *mngr, int err)
 	free(mngr->l_cmd);
 	ft_avlfree(mngr->s_arr);
 	ft_vecdel((void**)&mngr->vec);
-
 	exit(err);
 }
