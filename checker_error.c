@@ -24,7 +24,9 @@ void stk_del(t_stk *stk)
 void help()
 {
 	ft_printf("Usage:\n./pushswap [-(file|debug|vis|color|bubble)]"
-			  "('number_to_be_sorted')|(numbers to be sorted)\n");
+			  "('number_to_be_sorted')|(numbers to be sorted)\n"
+	 "every flag should be given separately\n"
+  "-file should be the last one just before file name\n");
 }
 
 /*
