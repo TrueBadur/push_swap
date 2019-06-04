@@ -97,7 +97,7 @@ enum	e_errors
 };
 
 void 		set_for_bub(t_mngr *mngr);
-void  		split_stack_opt(t_mngr *mngr);
+void  		split_stack_inssort(t_mngr *mngr);
 t_vector 	*get_ops_seq(t_stk *stk_c, int num, t_vector *vec);
 int 		get_stk_n(t_stk *stk, t_vector **vec, int i);
 void 		find_shortest(t_mngr *mngr, t_vector **vec, int i);

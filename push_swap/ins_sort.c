@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void		split_stack_opt(t_mngr *mngr)
+void		split_stack_inssort(t_mngr *mngr)
 {
 	while (!check_sort(mngr->stk[0], ASC, 0) && mngr->stk[0]->lst_s > 3)
 		push(mngr, PSH_B);
@@ -49,8 +49,9 @@ t_vector	*get_ops_seq(t_stk *stk_c, int num, t_vector *vec)
 }
 
 /*
- * sets sequence of commands in vector vec to get ith element (0 is top most element, 1 is the second
- * from top, 2 - first from bottom and then alternate top and bottom) of stack
+ * sets sequence of commands in vector vec to get ith element (0 is top most
+ * element, 1 is the second from top,
+ * 2 - first from bottom and then alternate top and bottom) of stack
  * and returns value of this element
  */
 
