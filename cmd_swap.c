@@ -27,9 +27,7 @@ static t_stk	*swp_first(t_stk *stk, t_mngr *mngr)
 	return (stk);
 }
 
-
-
-char		cmd_swap(t_mngr *mngr, char *str)
+char			cmd_swap(t_mngr *mngr, const char *str)
 {
 	mngr->n_cmd++;
 	if (*str == 'a' || *str == 'b' || *str == 'r')
@@ -47,4 +45,15 @@ char		cmd_swap(t_mngr *mngr, char *str)
 	if (mngr->dbg)
 		draw_stacks(mngr);
 	return (mngr->dbg);
+}
+
+void			swap(t_mngr *mngr, t_eops cmd)
+{
+	if (cmd == SWP_S)
+		ft_printf("ss\n", cmd_swap(mngr, "r"));
+	else
+	{
+		ft_printf(cmd == SWP_A ? "sa\n": "sb\n");
+		cmd_swap(mngr, cmd == SWP_A ? "a" : "b");
+	}
 }
