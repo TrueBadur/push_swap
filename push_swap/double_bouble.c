@@ -12,6 +12,8 @@
 
 #include "push_swap.h"
 
+#ifdef HIDDEN
+
 void 	find_seq_stack(t_mngr *mngr, t_stk *stk, int dir)
 {
 	t_list *lst;
@@ -203,149 +205,35 @@ void	sync_stacks_pro(t_mngr *mngr)
 	dir1 = val_to_place_dir_exist(mngr->stk[1], mngr->stk[1]->piv);
 }*/
 
-
+void set_for_bub(t_mngr *mngr)
+{
+	mngr->vec = ft_vecinit(mngr->stk[0]->lst_s);
+	ft_avltovec(mngr->s_arr, mngr->vec);
+	set_sort(mngr->stk[0], ASC, mngr->stk[0]->max);
+	mngr->stk[0]->piv = ((int*)(mngr->vec->data))
+	[(mngr->stk[0]->lst_s - 1) / 2];
+}
 
 void	double_bouble(t_mngr *mngr)
 {
-
-	ft_printf("%d %d %d\n", mngr->stk[0]->min, mngr->stk[0]->max, mngr->stk[0]->piv);
 	split_stack(mngr);
-	ft_printf("End of split %d\n", mngr->n_cmd);
-	//find_both_seq(mngr);
 	mngr->stk[0]->sq_l = 1;
 	mngr->stk[0]->piv = mngr->stk[0]->max;
 	mngr->stk[1]->sq_l = 1;
 	mngr->stk[1]->piv = mngr->stk[1]->min;
 	sync_stacks(mngr, mngr->stk[0]->lst_s - 1, 1);
-	ft_printf("End of sync %d\n", mngr->n_cmd);
 	bsort_both(mngr);
-	ft_printf("End of sort %d\n", mngr->n_cmd);
-	while (get_sort(mngr) % 24 != 0)
+	int i = mngr->stk[0]->lst_s + 3;
+	while (get_sort(mngr) % 24 != 0 && i)
 	{
 		safe_rotate(mngr, 'r');
 		safe_rotate(mngr, '\0');
+		i--;
 	}
-	ft_printf("End of rotate %d\n", mngr->n_cmd);
+	if (!i)
+		checker_error(mngr, INTERNAL_ERROR);
 	while (mngr->stk[1]->lst_s != 0)
 		ft_printf("pa\n", cmd_push(mngr, "a"));
-
-	//merge_two(mngr);
 }
 
-/* -781 -585 -440 196 -495 -284 443 -18 889 -840 -422 -734 134 -54 391 175
-pb
-pb
-sb
-pb
-sr
-pb
-sr
-ra
-ra
-sa
-ra
-ra
-sa
-pb
-sa
-pb
-sr
-pb
-sr
-sa
-rr
-sr
-rr
-rr
-sr
-rr
-sr
-rr
-sr
-ra
-sa
-rrr
-sa
-rrr
-sb
-rrr
-sr
-rrr
-sa
-rra
-sa
-rr
-rr
-sb
-rr
-sr
-rrr
-sa
-rrr
-rrr
-pa
-pa
-pa
-pa
-pa
-pa
-pa
-
-
-pb
-pb
-pb
-rra
-rra
-sa
-ra
-sa
-ra
-sa
-pb
-sr
-pb
-ra
-sa
-ra
-sa
-sa
-ra
-sa
-pb
-sa
-rb
-pb
-sr
-pb
-sa
-rrr
-sr
-rrr
-sb
-rra
-sa
-rra
-sa
-rra
-sa
-ra
-rb
-rr
-rr
-sa
-rra
-sa
-rra
-sa
-rra
-rra
-pa
-pa
-pa
-pa
-pa
-pa
-pa
-pa
- */
+#endif

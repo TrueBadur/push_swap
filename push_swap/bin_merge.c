@@ -58,7 +58,7 @@ static void	sort_pairs(t_mngr *mngr)
 
 static void	merge_pairs(t_mngr *mngr, int sc)
 {
-	t_list *la;
+	t_list	*la;
 	t_list	*lb;
 	int		i;
 	int 	j;
