@@ -32,13 +32,27 @@ void insert_sort(t_mngr *mngr)
 	}
 }
 
+#ifdef HIDDEN
+
 void gen_commands(t_mngr *mngr)
 {
-	if (!mngr->bub)
+	if (mngr->bub == 0)
 	{
 		split_stack_inssort(mngr);
 		insert_sort(mngr);
 	}
-	else
+	else if (mngr->bub == 1)
 		double_bouble(mngr);
+	else
+		bin_merge(mngr);
 }
+
+#else
+
+void gen_commands(t_mngr *mngr)
+{
+	split_stack_inssort(mngr);
+	insert_sort(mngr);
+}
+
+#endif

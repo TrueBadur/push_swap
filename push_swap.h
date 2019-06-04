@@ -35,18 +35,32 @@ typedef struct	s_stacks
 	int 	max;
 }				t_stk;
 
+# ifdef HIDDEN
+
 typedef struct s_mngr
 {
 	t_stk		*stk[2];
 	char		col;
 	char		dbg;
-	char		viz;
 	char		bub;
 	char		*l_cmd;
 	unsigned	n_cmd;
 	t_btavl		*s_arr;
 	t_vector	*vec;
 }				t_mngr;
+
+# else
+
+typedef struct s_mngr
+{
+	t_stk		*stk[2];
+	char		dbg;
+	unsigned	n_cmd;
+	char		*l_cmd;
+	t_btavl		*s_arr;
+}				t_mngr;
+
+#endif
 
 typedef enum 	e_ops
 {
@@ -87,6 +101,7 @@ enum	e_errors
 	HELP_CALL,
 	NO_ARG = 1,
 	STR_ARG,
+	FILE_ERROR,
 	INT_OVERFLOW_ARG,
 	DUPLICTATE_ARG,
 	NOT_EXIST_INSTR,

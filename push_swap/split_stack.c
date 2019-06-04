@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-
+#ifdef HIDDEN
 
 static void	set_min_to_bot(t_stk *stk, t_mngr *mngr)
 {
@@ -71,3 +71,5 @@ void		split_stack(t_mngr *mngr)
 	set_min_to_bot(mngr->stk[0], mngr);
 	push_max_to_place(stk, mngr);
 }
+
+#endif

@@ -13,9 +13,7 @@
 #include "push_swap.h"
 #include <limits.h>
 
-
-
-void init_stacks(t_mngr *mngr)
+void	init_stacks(t_mngr *mngr)
 {
 	if (!(mngr->stk[0] = malloc(sizeof(t_stk))))
 		checker_error(mngr, MEMORY_ALLOC_FAIL);
@@ -29,10 +27,12 @@ void init_stacks(t_mngr *mngr)
 	mngr->stk[1]->max = INT_MIN;
 }
 
-int set_flags(int ac, char **av, t_mngr *mngr, int *fd)
+#ifdef HIDDEN
+
+int		set_flags(int ac, char **av, t_mngr *mngr, int *fd)
 {
-	char *arg;
-	int i;
+	char	*arg;
+	int		i;
 
 	i = 0;
 	while (++i < ac)
@@ -46,10 +46,10 @@ int set_flags(int ac, char **av, t_mngr *mngr, int *fd)
 				*fd = open(av[i + 1], O_RDONLY);
 			else if (ft_strcmp(arg + 1, "debug") == 0 || *(arg + 1) == 'd')
 				mngr->dbg = 1;
-			else if (ft_strcmp(arg + 1, "vis") == 0 || *(arg + 1) == 'v')
-				mngr->viz = 1;
 			else if (ft_strcmp(arg + 1, "bubble") == 0 || *(arg + 1) == 'b')
 				mngr->bub = 1;
+			else if (ft_strcmp(arg + 1, "merge") == 0 || *(arg + 1) == 'm')
+				mngr->bub = 2;
 		}
 		else
 			return (--i);
@@ -57,20 +57,48 @@ int set_flags(int ac, char **av, t_mngr *mngr, int *fd)
 	return (--i);
 }
 
-void parse_args(int ac, char **av, t_mngr *mngr)
+#else
+
+int		set_flags(int ac, char **av, t_mngr *mngr, int *fd)
 {
-	int 	fd;
+	char	*arg;
+	int		i;
+
+	i = 0;
+	while (++i < ac)
+	{
+		arg = av[i];
+		if (*arg == '-')
+		{
+			if (ft_strcmp(arg + 1, "help") == 0 || *(arg + 1) == 'h')
+				checker_error(mngr, HELP_CALL);
+			else if (ft_strcmp(arg + 1, "file") == 0 || *(arg + 1) == 'f')
+				*fd = open(av[i + 1], O_RDONLY);
+			else if (ft_strcmp(arg + 1, "debug") == 0 || *(arg + 1) == 'd')
+				mngr->dbg = 1;
+		}
+		else
+			return (--i);
+	}
+	return (--i);
+}
+
+#endif
+
+void	parse_args(int ac, char **av, t_mngr *mngr)
+{
+	int		fd;
 	int		skip;
 	char	*str;
 
 	init_stacks(mngr);
-	fd = -1;
+	fd = -2;
 	skip = 0;
 	if (av[1][0] == '-')
 		skip = set_flags(ac, av, mngr, &fd);
 	if (ac - skip == 2)
 	{
-		if (fd > 0 )
+		if (fd > 0)
 		{
 			get_next_line(fd, &str);
 			close(fd);
