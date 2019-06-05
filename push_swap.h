@@ -23,6 +23,9 @@
 #include <limits.h>
 # include "libft.h"
 
+
+
+# ifdef HIDDEN
 typedef struct	s_stacks
 {
 	t_list	*lst;
@@ -34,8 +37,6 @@ typedef struct	s_stacks
 	int		min;
 	int 	max;
 }				t_stk;
-
-# ifdef HIDDEN
 
 typedef struct s_mngr
 {
@@ -49,14 +50,33 @@ typedef struct s_mngr
 	t_vector	*vec;
 }				t_mngr;
 
+
+typedef enum	e_swap_opts
+{
+	STD,
+	A_ONL,
+	B_ONL,
+	BOTH_ONL,
+	A_OR_BOTH,
+	B_OR_BOTH
+}				t_eswopt;
+
 # else
+
+typedef struct	s_stacks
+{
+	t_list	*lst;
+	t_list	*l_e;
+	int		lst_s;
+	int		min;
+	int 	max;
+}				t_stk;
 
 typedef struct s_mngr
 {
 	t_stk		*stk[2];
 	char		dbg;
 	unsigned	n_cmd;
-	char		*l_cmd;
 	t_btavl		*s_arr;
 }				t_mngr;
 
@@ -64,6 +84,7 @@ typedef struct s_mngr
 
 typedef enum 	e_ops
 {
+	INIT,
 	SWP_A = 2,
 	SWP_B,
 	SWP_S,
@@ -86,15 +107,7 @@ typedef enum 	e_dir
 	ONE_EL
 }				t_edir;
 
-typedef enum	e_swap_opts
-{
-	STD,
-	A_ONL,
-	B_ONL,
-	BOTH_ONL,
-	A_OR_BOTH,
-	B_OR_BOTH
-}				t_eswopt;
+
 
 enum	e_errors
 {
@@ -111,6 +124,10 @@ enum	e_errors
 	SORT_FAILED
 };
 
+#ifdef HIDDEN
+
+void safe_swap(t_mngr *mngr, t_eswopt mode, int piv);
+#endif
 void 		set_for_bub(t_mngr *mngr);
 void  		split_stack_inssort(t_mngr *mngr);
 t_vector 	*get_ops_seq(t_stk *stk_c, int num, t_vector *vec);
@@ -121,7 +138,7 @@ void		parse_nums(t_mngr *mngr, int ac, char **a, int skip);
 
 void	checker_error(t_mngr *mngr, int err);
 void	parse_args(int ac, char **av, t_mngr *mngr);
-void	draw_stacks(t_mngr *mngr);
+void	draw_stacks(t_mngr *mngr, t_eops cmd);
 void	gen_commands(t_mngr *mngr);
 void			swap(t_mngr *mngr, t_eops cmd);
 char			cmd_swap(t_mngr *mngr, const char *str);
@@ -141,9 +158,10 @@ void set_sort(t_stk *stk, t_edir dir, int val);
 void smart_swap(t_mngr *mngr);
 void	safe_rotate(t_mngr *mngr, char c);
 int	get_sort(t_mngr *mngr);
-void safe_swap(t_mngr *mngr, t_eswopt mode, int piv);
 t_stk * rot_f(t_stk *stk, t_mngr *mngr);
 t_stk *rot_r(t_stk *stk, t_mngr *mngr);
 int val_to_place_dir_nexis(t_stk *stk, int val);
+
+
 
 #endif //PUSH_SWAP_PUSH_SWAP_MAIN_H

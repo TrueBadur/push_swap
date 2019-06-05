@@ -76,7 +76,6 @@ void checker_error(t_mngr *mngr, int err)
 		ft_fdprintf(STDERR_FILENO, "%s\n", DUP_ARG_MSG);
 	stk_del(mngr->stk[0]);
 	stk_del(mngr->stk[1]);
-	free(mngr->l_cmd);
 	ft_avlfree(mngr->s_arr);
 	exit(err);
 }
