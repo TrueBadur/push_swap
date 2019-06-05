@@ -102,22 +102,21 @@ int		check_sort(t_stk *stk, t_edir dir, int fin)
 		return (0);
 	while (lst->next)
 		if (cmp_first_two(lst) != dir && lst->next)
-		{
 			if (fin)
 				break ;
-			if ((dir == DESC && (int)lst->data == stk->min &&
+			else if ((dir == DESC && (int)lst->data == stk->min &&
 			(int)lst->next->data == stk->max) || (dir == ASC &&
 			(int)lst->data == stk->max && (int)lst->next->data == stk->min))
 				lst = lst->next;
 			else
 				break ;
-		}
 		else
 			lst = lst->next;
 	if (lst->next)
 		return (0);
-	else if (fin || ((dir == ASC && (int)lst->data < (int)stk->lst->data) ||
-	(dir == DESC && (int)lst->data > (int)stk->lst->data)))
+	else if (fin || (dir == ASC && ((int)lst->data < (int)stk->lst->data ||
+			(int)lst->data == stk->max)) || (dir == DESC && ((int)lst->data >
+			(int)stk->lst->data || (int)lst->data == stk->min)))
 		return (1);
 	return (0);
 }
