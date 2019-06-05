@@ -62,24 +62,20 @@ char		cmd_push(t_mngr *mngr, const char *str)
 {
 	mngr->n_cmd++;
 	if (*str == 'a')
-	{
 		pushfirst(mngr->stk[1], mngr->stk[0], mngr);
-		(int)mngr->stk[0]->lst->data;
-	}
 	else if (*str == 'b')
 		pushfirst(mngr->stk[0], mngr->stk[1], mngr);
 	else
 		checker_error(mngr, NOT_EXIST_INSTR);
 	if (*(str + 1))
 		checker_error(mngr, NOT_EXIST_INSTR);
-	mngr->dbg *= PSH_A + (*str == 'b'); //TODO WTF ???
 	if (mngr->dbg)
-		draw_stacks(mngr);
+		draw_stacks(mngr, PSH_A + (*str == 'b'));
 	return (mngr->dbg);
 }
 
 void		push(t_mngr *mngr, t_eops cmd)
 {
-	ft_printf(cmd == PSH_A ? "sa\n" : "sb\n");
+	ft_printf(cmd == PSH_A ? "pa\n" : "pb\n");
 	cmd_push(mngr, cmd == PSH_A ? "a" : "b");
 }

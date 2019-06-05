@@ -50,7 +50,7 @@ int main(int ac, char **av)
 	mngr.s_arr = ft_avlfree(mngr.s_arr);
 	if (check_sort(mngr.stk[0], ASC, 1) && !mngr.stk[1]->lst)
 		return (0);
-	draw_stacks(&mngr);
+	draw_stacks(&mngr, INIT);
 	gen_commands(&mngr);
 	if (mngr.dbg)
 		ft_printf("Total operations = %d\n", mngr.n_cmd);

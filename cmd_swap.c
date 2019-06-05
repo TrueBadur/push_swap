@@ -41,9 +41,8 @@ char			cmd_swap(t_mngr *mngr, const char *str)
 		checker_error(mngr, NOT_EXIST_INSTR);
 	if (*(str + 1))
 		checker_error(mngr, NOT_EXIST_INSTR);
-	mngr->dbg *= SWP_A + (*str == 'b') + 2 * (*str == 'r');
 	if (mngr->dbg)
-		draw_stacks(mngr);
+		draw_stacks(mngr, SWP_A + (*str == 'b') + 2 * (*str == 'r'));
 	return (mngr->dbg);
 }
 

@@ -67,9 +67,9 @@ char cmd_rotate(t_mngr *mng, const char *str, int dir)
 		checker_error(mng, NOT_EXIST_INSTR);
 	if (*(str + 1))
 		checker_error(mng, NOT_EXIST_INSTR);
-	mng->dbg *= ROT_A * !r + RROT_A * r + 2 * (*str == 'r') + (*str == 'b');
 	if (mng->dbg)
-		draw_stacks(mng);
+		draw_stacks(mng, ROT_A * !r + RROT_A * r + 2 * (*str == 'r') +
+		(*str == 'b'));
 	return (mng->dbg);
 }
 
