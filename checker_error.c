@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker_error.c                                    :+:      :+:    :+:   */
+/*   pushswap_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -36,7 +36,7 @@ void	help(void)
 
 #ifdef HIDDEN
 
-void	checker_error(t_mngr *mngr, int err)
+void	pushswap_exit(t_mngr *mngr, int err)
 {
 	if (err != HELP_CALL)
 		ft_fdprintf(STDERR_FILENO, "Error\n");
@@ -60,11 +60,11 @@ void	checker_error(t_mngr *mngr, int err)
 
 #else
 
-void	checker_error(t_mngr *mngr, int err)
+void	pushswap_exit(t_mngr *mngr, int err)
 {
-	if (err != HELP_CALL)
+	if (err != HELP_CALL && err != SUCCESS)
 		ft_fdprintf(STDERR_FILENO, "Error\n");
-	else
+	else if (err == HELP_CALL)
 		help();
 	if (err == NO_ARG)
 		ft_fdprintf(STDERR_FILENO, "%s\n", NO_ARG_MSG);
@@ -76,6 +76,7 @@ void	checker_error(t_mngr *mngr, int err)
 		ft_fdprintf(STDERR_FILENO, "%s\n", DUP_ARG_MSG);
 	stk_del(mngr->stk[0]);
 	stk_del(mngr->stk[1]);
+	close(mngr->fd);
 	free(mngr->l_cmd);
 	ft_avlfree(mngr->s_arr);
 	exit(err);
