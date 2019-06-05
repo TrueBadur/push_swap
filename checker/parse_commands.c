@@ -12,10 +12,33 @@
 
 #include "push_swap.h"
 
+t_eops	str_to_op(const char *str)
+{
+	int ret;
+
+	ret = 0;
+	if (*(str) == 'p')
+		return (*(str + 1) == 'a' ? PSH_A : PSH_B);
+	else if (*(str) == 's')
+		ret += SWP_A;
+	else if (*(str) == 'r')
+		if (*(str + 2) && *(str + 1) == 'r')
+			ret += RROT_A;
+		else
+			ret += ROT_A;
+	else
+		return (0);
+	str += *(str + 2) && *(str + 1) == 'r' ? 2 : 1;
+	if (*str == 'r' || *str == 's')
+		ret += 2;
+	else
+		ret += *str == 'a' ? 0 : 1;
+	return (ret);
+}
 
 void	parse_commands(t_mngr *mngr)
 {
-	while (get_next_line(STDIN_FILENO, &mngr->l_cmd))
+	while (get_next_line(mngr->fd, &mngr->l_cmd))
 	{
 		if (!mngr->l_cmd)
 			continue ;
@@ -28,8 +51,8 @@ void	parse_commands(t_mngr *mngr)
 		else if (*mngr->l_cmd == '\0')
 			return ;
 		else
-			checker_error(mngr, NOT_EXIST_INSTR);
+			pushswap_exit(mngr, NOT_EXIST_INSTR);
 		if (mngr->dbg)
-			draw_stacks(mngr);
+			draw_stacks(mngr, str_to_op(mngr->l_cmd));
 	}
 }

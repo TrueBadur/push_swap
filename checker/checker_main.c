@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int check_sort(t_mngr *mngr)
+int	check_sort_simple(t_mngr *mngr)
 {
 	t_list *lst;
 
@@ -30,19 +30,21 @@ int main(int ac, char **av)
 {
 	t_mngr	mngr;
 
+	ft_bzero(&mngr, sizeof(mngr));
+	mngr.fd = STDIN_FILENO;
+	mngr.tp = 'c';
 	if (ac == 1)
-		checker_error(NULL, NO_ARG);
+		pushswap_exit(NULL, NO_ARG);
 	else
 		parse_args(ac, av, &mngr);
-	mngr.dbg = 1;
-	mngr.col = 1;
-	mngr.n_cmd = 0;
-	draw_stacks(&mngr);
+	draw_stacks(&mngr, INIT);
 	parse_commands(&mngr);
-	if (check_sort(&mngr))
+	if (mngr.dbg)
+		ft_printf("Total operations = %d\n", mngr.n_cmd);
+	if (check_sort_simple(&mngr))
 		ft_printf("{Green}OK{eof}\n");
 	else
 		ft_printf("{Red}KO{eof}\n");
-	return (0);
+	pushswap_exit(&mngr, SUCCESS);
 }
 
