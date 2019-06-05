@@ -43,7 +43,7 @@ static void	pushfirst(t_stk *from, t_stk *to, t_mngr *mngr)
 	t_list *tmp;
 
 	if (!from->lst)
-		checker_error(mngr, WRONG_INSTR);
+		pushswap_exit(mngr, WRONG_INSTR);
 	tmp = from->lst->next;
 	from->lst->next = to->lst;
 	to->lst = from->lst;
@@ -66,9 +66,9 @@ char		cmd_push(t_mngr *mngr, const char *str)
 	else if (*str == 'b')
 		pushfirst(mngr->stk[0], mngr->stk[1], mngr);
 	else
-		checker_error(mngr, NOT_EXIST_INSTR);
+		pushswap_exit(mngr, NOT_EXIST_INSTR);
 	if (*(str + 1))
-		checker_error(mngr, NOT_EXIST_INSTR);
+		pushswap_exit(mngr, NOT_EXIST_INSTR);
 	if (mngr->dbg)
 		draw_stacks(mngr, PSH_A + (*str == 'b'));
 	return (mngr->dbg);
@@ -76,6 +76,6 @@ char		cmd_push(t_mngr *mngr, const char *str)
 
 void		push(t_mngr *mngr, t_eops cmd)
 {
-	ft_printf(cmd == PSH_A ? "pa\n" : "pb\n");
+	ft_fdprintf(mngr->fd, cmd == PSH_A ? "pa\n" : "pb\n");
 	cmd_push(mngr, cmd == PSH_A ? "a" : "b");
 }

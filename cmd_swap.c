@@ -17,7 +17,7 @@ static t_stk	*swp_first(t_stk *stk, t_mngr *mngr)
 	t_list	*tmp;
 
 	if (!stk->lst || !stk->lst->next)
-		checker_error(mngr, WRONG_INSTR);
+		pushswap_exit(mngr, WRONG_INSTR);
 	tmp = stk->lst->next;
 	stk->lst->next = stk->lst->next->next;
 	tmp->next = stk->lst;
@@ -30,29 +30,29 @@ static t_stk	*swp_first(t_stk *stk, t_mngr *mngr)
 char			cmd_swap(t_mngr *mngr, const char *str)
 {
 	mngr->n_cmd++;
-	if (*str == 'a' || *str == 'b' || *str == 'r')
+	if (*str == 'a' || *str == 'b' || *str == 's')
 	{
-		if (*str == 'a' || *str == 'r')
+		if (*str == 'a' || *str == 's')
 			mngr->stk[0] = swp_first(mngr->stk[0], mngr);
-		if (*str == 'b' || *str == 'r')
+		if (*str == 'b' || *str == 's')
 			mngr->stk[1] = swp_first(mngr->stk[1], mngr);
 	}
 	else
-		checker_error(mngr, NOT_EXIST_INSTR);
+		pushswap_exit(mngr, NOT_EXIST_INSTR);
 	if (*(str + 1))
-		checker_error(mngr, NOT_EXIST_INSTR);
+		pushswap_exit(mngr, NOT_EXIST_INSTR);
 	if (mngr->dbg)
-		draw_stacks(mngr, SWP_A + (*str == 'b') + 2 * (*str == 'r'));
+		draw_stacks(mngr, SWP_A + (*str == 'b') + 2 * (*str == 's'));
 	return (mngr->dbg);
 }
 
 void			swap(t_mngr *mngr, t_eops cmd)
 {
 	if (cmd == SWP_S)
-		ft_printf("ss\n", cmd_swap(mngr, "r"));
+		ft_fdprintf(mngr->fd, "ss\n", cmd_swap(mngr, "s"));
 	else
 	{
-		ft_printf(cmd == SWP_A ? "sa\n" : "sb\n");
+		ft_fdprintf(mngr->fd, cmd == SWP_A ? "sa\n" : "sb\n");
 		cmd_swap(mngr, cmd == SWP_A ? "a" : "b");
 	}
 }

@@ -17,7 +17,7 @@ t_stk * rot_f(t_stk *stk, t_mngr *mngr)
 	t_list *tmp;
 
 	if (!stk || !stk->lst || !stk->l_e)
-		checker_error(mngr, WRONG_INSTR);
+		pushswap_exit(mngr, WRONG_INSTR);
 	if (stk->lst == stk->l_e)
 		return (stk);
 	tmp = stk->lst->next;
@@ -33,7 +33,7 @@ t_stk *rot_r(t_stk *stk, t_mngr *mngr)
 	t_list *tmp;
 
 	if (!stk || !stk->lst || !stk->l_e)
-		checker_error(mngr, WRONG_INSTR);
+		pushswap_exit(mngr, WRONG_INSTR);
 	if (stk->lst == stk->l_e)
 		return (stk);
 	tmp = stk->l_e;
@@ -64,9 +64,9 @@ char cmd_rotate(t_mngr *mng, const char *str, int dir)
 			mng->stk[1] = r ? rot_r(mng->stk[1], mng) : rot_f(mng->stk[1], mng);
 	}
 	else
-		checker_error(mng, NOT_EXIST_INSTR);
+		pushswap_exit(mng, NOT_EXIST_INSTR);
 	if (*(str + 1))
-		checker_error(mng, NOT_EXIST_INSTR);
+		pushswap_exit(mng, NOT_EXIST_INSTR);
 	if (mng->dbg)
 		draw_stacks(mng, ROT_A * !r + RROT_A * r + 2 * (*str == 'r') +
 		(*str == 'b'));
@@ -78,20 +78,20 @@ void	rotate(t_mngr *mngr, t_eops cmd)
 	if (cmd < RROT_A)
 	{
 		if (cmd == ROT_R)
-			ft_printf("rr\n", cmd_rotate(mngr, "r", 0));
+			ft_fdprintf(mngr->fd, "rr\n", cmd_rotate(mngr, "r", 0));
 		else
 		{
-			ft_printf(cmd == ROT_A ? "ra\n" : "rb\n");
+			ft_fdprintf(mngr->fd, cmd == ROT_A ? "ra\n" : "rb\n");
 			cmd_rotate(mngr, cmd == ROT_A ? "a" : "b", 0);
 		}
 	}
 	else
 	{
 		if (cmd == RROT_R)
-			ft_printf("rrr\n", cmd_rotate(mngr, "rr", 0));
+			ft_fdprintf(mngr->fd, "rrr\n", cmd_rotate(mngr, "rr", 0));
 		else
 		{
-			ft_printf(cmd == RROT_A ? "rra\n" : "rrb\n");
+			ft_fdprintf(mngr->fd, cmd == RROT_A ? "rra\n" : "rrb\n");
 			cmd_rotate(mngr, cmd == RROT_A ? "ra" : "rb", 0);
 		}
 	}
