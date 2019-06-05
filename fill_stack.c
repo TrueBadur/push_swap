@@ -26,9 +26,9 @@ static t_list	*instostk(t_stk *stk, char *str, char mode, t_mngr *mngr)
 	t_btavl	*t;
 
 	if ((err = ft_atoi_safe(str, &tmp)))
-		checker_error(mngr, err < 0 ? INT_OVERFLOW_ARG : STR_ARG);
+		pushswap_exit(mngr, err < 0 ? INT_OVERFLOW_ARG : STR_ARG);
 	if ((t_btavl*)ft_avlsearch(mngr->s_arr, tmp, 0))
-		checker_error(mngr, DUPLICTATE_ARG);
+		pushswap_exit(mngr, DUPLICTATE_ARG);
 	stk->lst_s++;
 	set_min_max(stk, tmp);
 	if (mode)
@@ -55,10 +55,10 @@ void			parse_nums(t_mngr *mngr, int ac, char **a, int skip)
 	{
 		while (*a)
 			if (!(mngr->stk[0]->lst = instostk(mngr->stk[0], *(a++), 1, mngr)))
-				checker_error(mngr, MEMORY_ALLOC_FAIL);
+				pushswap_exit(mngr, MEMORY_ALLOC_FAIL);
 	}
 	else
 		while (ac-- > 1 + skip)
 			if (!(mngr->stk[0]->lst = instostk(mngr->stk[0], a[ac], 0, mngr)))
-				checker_error(mngr, MEMORY_ALLOC_FAIL);
+				pushswap_exit(mngr, MEMORY_ALLOC_FAIL);
 }

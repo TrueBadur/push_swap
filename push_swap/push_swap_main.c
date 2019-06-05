@@ -57,7 +57,7 @@ int	main(int ac, char **av)
 	if (mngr.dbg)
 		ft_printf("Total operations = %d\n", mngr.n_cmd);
 	pushswap_exit(&mngr, check_sort(mngr.stk[0], ASC, 1) && !mngr.stk[1]->lst ?
-						 SUCCESS : SORT_FAILED);
+	SUCCESS : SORT_FAILED);
 }
 
 #endif

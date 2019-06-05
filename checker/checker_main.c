@@ -26,7 +26,7 @@ int	check_sort_simple(t_mngr *mngr)
 	return (1);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_mngr	mngr;
 
@@ -47,4 +47,3 @@ int main(int ac, char **av)
 		ft_printf("{Red}KO{eof}\n");
 	pushswap_exit(&mngr, SUCCESS);
 }
-

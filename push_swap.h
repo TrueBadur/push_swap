@@ -17,6 +17,8 @@
 # define STR_ARG_MSG "Arguments must be only numerical."
 # define INT_OVERFLOW_MSG "Arguments must fit into int."
 # define DUP_ARG_MSG "Arguments can not duplicate"
+# define WRITE (O_WRONLY | O_CREAT | O_TRUNC)
+# define CHMOD (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)
 
 
 # include <fcntl.h>
@@ -44,6 +46,7 @@ typedef struct s_mngr
 	char		col;
 	char		dbg;
 	char		bub;
+	char 		viz;
 	char		*l_cmd;
 	unsigned	n_cmd;
 	t_btavl		*s_arr;
@@ -76,9 +79,13 @@ typedef struct s_mngr
 {
 	t_stk		*stk[2];
 	char		dbg;
-	unsigned	n_cmd;
+	char 		viz;
+	char 		tp;
+	int			fd;
 	char		*l_cmd;
+	unsigned	n_cmd;
 	t_btavl		*s_arr;
+
 }				t_mngr;
 
 #endif
@@ -112,8 +119,9 @@ typedef enum 	e_dir
 
 enum	e_errors
 {
+	SUCCESS,
 	HELP_CALL,
-	NO_ARG = 1,
+	NO_ARG,
 	STR_ARG,
 	FILE_ERROR,
 	INT_OVERFLOW_ARG,
@@ -122,7 +130,7 @@ enum	e_errors
 	WRONG_INSTR,
 	INTERNAL_ERROR,
 	MEMORY_ALLOC_FAIL,
-	SORT_FAILED
+	SORT_FAILED,
 };
 
 #ifdef HIDDEN
@@ -137,7 +145,7 @@ void 		find_shortest(t_mngr *mngr, t_vector **vec, int i);
 void 		eval_seq(t_vector *vec, t_mngr *mngr);
 void		parse_nums(t_mngr *mngr, int ac, char **a, int skip);
 
-void	checker_error(t_mngr *mngr, int err);
+void	pushswap_exit(t_mngr *mngr, int err);
 void	parse_args(int ac, char **av, t_mngr *mngr);
 void	draw_stacks(t_mngr *mngr, t_eops cmd);
 void	gen_commands(t_mngr *mngr);
