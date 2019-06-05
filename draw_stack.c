@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static char		*print_cmd_name(t_eops cmd, int n_cmd)
+static void		print_cmd_name(t_eops cmd, int n_cmd)
 {
 	static const char	*cmds[] = {"sa", "sb", "ss", "pa", "pb", "ra", "rb",
 									"rr", "rra", "rrb", "rrr", "init"};
@@ -74,7 +74,7 @@ void			print_first(t_list **a, t_list **b, int colpos)
 		if ((colpos % 2 == 0 && i == 1) || (colpos % 11 == 0 && i == 2))
 			ft_printf("{Red}");
 		if (*a)
-			ft_printf("%-12d{eof}", (int)(*a)->data);
+			ft_printf("%-12d{eof}   ", (int)(*a)->data);
 		else
 			ft_printf("%15c", ' ');
 		if ((colpos % 3 == 0 && i == 1) || (colpos % 13 == 0 && i == 2))
@@ -94,7 +94,7 @@ static void		print_else(t_list *a, t_list *b, int colpos)
 		if (a && !a->next && colpos % 5 == 0)
 			ft_printf("{Red}");
 		if (a)
-			ft_printf("%-12d{eof}", (int)a->data);
+			ft_printf("%-12d{eof}   ", (int)a->data);
 		else
 			ft_printf("%15c", ' ');
 		if (b && !b->next && colpos % 7 == 0)
@@ -114,7 +114,7 @@ void			draw_stacks(t_mngr *mngr, t_eops cmd)
 	t_list	*b;
 	int		colpos;
 
-	if (!mngr->dbg)
+	if (mngr->dbg != 1)
 		return ;
 	a = mngr->stk[0]->lst;
 	colpos = getcolpos(cmd);
