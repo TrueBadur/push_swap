@@ -43,8 +43,10 @@ int	main(int ac, char **av)
 	t_mngr	mngr;
 
 	ft_bzero(&mngr, sizeof(mngr));
+	mngr.fd = STDOUT_FILENO;
+	mngr.tp = 'p';
 	if (ac == 1)
-		checker_error(NULL, NO_ARG);
+		pushswap_exit(NULL, NO_ARG);
 	else
 		parse_args(ac, av, &mngr);
 	mngr.s_arr = ft_avlfree(mngr.s_arr);
@@ -54,8 +56,8 @@ int	main(int ac, char **av)
 	gen_commands(&mngr);
 	if (mngr.dbg)
 		ft_printf("Total operations = %d\n", mngr.n_cmd);
-	return ((check_sort(mngr.stk[0], ASC, 1) && !mngr.stk[1]->lst) ? 0 :
-	SORT_FAILED);
+	pushswap_exit(&mngr, check_sort(mngr.stk[0], ASC, 1) && !mngr.stk[1]->lst ?
+						 SUCCESS : SORT_FAILED);
 }
 
 #endif
