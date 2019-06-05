@@ -13,16 +13,17 @@
 #include "push_swap.h"
 #include <limits.h>
 
-static void	set_min_max(t_stk *stk, int val)
+static void		set_min_max(t_stk *stk, int val)
 {
 	stk->min = val < stk->min ? val : stk->min;
 	stk->max = val > stk->max ? val : stk->max;
 }
 
-static t_list *instostk(t_stk *stk, char *str, char mode, t_mngr *mngr)
+static t_list	*instostk(t_stk *stk, char *str, char mode, t_mngr *mngr)
 {
 	int		tmp;
 	char	err;
+	t_btavl	*t;
 
 	if ((err = ft_atoi_safe(str, &tmp)))
 		checker_error(mngr, err < 0 ? INT_OVERFLOW_ARG : STR_ARG);
@@ -41,13 +42,13 @@ static t_list *instostk(t_stk *stk, char *str, char mode, t_mngr *mngr)
 		ft_lstadd(&stk->lst, ft_lstnew(&tmp, sizeof(int)));
 		stk->l_e = (stk->lst_s == 1) ? stk->lst : stk->l_e;
 	}
-	t_btavl *t = ft_avlnew(0, mode ? (int)stk->l_e->data :
-							  (int)stk->lst->data, 0);
+	t = ft_avlnew(0, mode ? (int)stk->l_e->data :
+	(int)stk->lst->data, 0);
 	mngr->s_arr = ft_avlins(mngr->s_arr, t);
 	return (stk->lst);
 }
 
-void	parse_nums(t_mngr *mngr, int ac, char **a, int skip)
+void			parse_nums(t_mngr *mngr, int ac, char **a, int skip)
 {
 	mngr->stk[0]->lst = NULL;
 	if (ac == 0)

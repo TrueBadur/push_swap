@@ -31,7 +31,7 @@ t_vector	*get_ops_seq(t_stk *stk_c, int num, t_vector *vec)
 	i = val_to_place_dir_nexis(stk_c, num);
 	while (i)
 	{
-		l = col_cn * sizeof(int) > vec->len ? 0 : 
+		l = col_cn * sizeof(int) > vec->len ? 0 :
 				(int)((char*)vec->data)[vec->len - sizeof(int) * col_cn];
 		if (l == ((i < 0) ? RROT_B : ROT_B))
 		{
@@ -49,11 +49,11 @@ t_vector	*get_ops_seq(t_stk *stk_c, int num, t_vector *vec)
 }
 
 /*
- * sets sequence of commands in vector vec to get ith element (0 is top most
- * element, 1 is the second from top,
- * 2 - first from bottom and then alternate top and bottom) of stack
- * and returns value of this element
- */
+** sets sequence of commands in vector vec to get ith element (0 is top most
+** element, 1 is the second from top,
+** 2 - first from bottom and then alternate top and bottom) of stack
+** and returns value of this element
+*/
 
 int			get_stk_n(t_stk *stk, t_vector **vec, int i)
 {
@@ -81,11 +81,11 @@ int			get_stk_n(t_stk *stk, t_vector **vec, int i)
 	return ((int)lst->data);
 }
 
-void	 find_shortest(t_mngr *mngr, t_vector **vec, int i)
+void		find_shortest(t_mngr *mngr, t_vector **vec, int i)
 {
-	t_vector *vec_t;
-	unsigned count;
-	int tmp;
+	t_vector	*vec_t;
+	unsigned	count;
+	int			tmp;
 
 	count = INT_MAX;
 	while (1)
@@ -108,7 +108,7 @@ void	 find_shortest(t_mngr *mngr, t_vector **vec, int i)
 	ft_vecdel((void **)&vec_t);
 }
 
-void eval_seq(t_vector *vec, t_mngr *mngr)
+void		eval_seq(t_vector *vec, t_mngr *mngr)
 {
 	int			*tmp;
 	unsigned	i;

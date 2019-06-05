@@ -52,7 +52,7 @@ void			swap(t_mngr *mngr, t_eops cmd)
 		ft_printf("ss\n", cmd_swap(mngr, "r"));
 	else
 	{
-		ft_printf(cmd == SWP_A ? "sa\n": "sb\n");
+		ft_printf(cmd == SWP_A ? "sa\n" : "sb\n");
 		cmd_swap(mngr, cmd == SWP_A ? "a" : "b");
 	}
 }

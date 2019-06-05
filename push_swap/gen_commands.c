@@ -12,13 +12,13 @@
 
 #include "push_swap.h"
 
-void insert_sort(t_mngr *mngr)
+void	insert_sort(t_mngr *mngr)
 {
-	t_vector *vec;
-	int i;
+	t_vector	*vec;
+	int			i;
 
 	vec = NULL;
-	while(mngr->stk[1]->lst_s)
+	while (mngr->stk[1]->lst_s)
 	{
 		find_shortest(mngr, &vec, 0);
 		eval_seq(vec, mngr);
@@ -34,7 +34,7 @@ void insert_sort(t_mngr *mngr)
 
 #ifdef HIDDEN
 
-void gen_commands(t_mngr *mngr)
+void	gen_commands(t_mngr *mngr)
 {
 	if (mngr->bub == 0)
 	{
@@ -49,7 +49,7 @@ void gen_commands(t_mngr *mngr)
 
 #else
 
-void gen_commands(t_mngr *mngr)
+void	gen_commands(t_mngr *mngr)
 {
 	split_stack_inssort(mngr);
 	insert_sort(mngr);

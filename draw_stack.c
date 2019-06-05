@@ -12,13 +12,11 @@
 
 #include "push_swap.h"
 
-
-
-static char *print_cmd_name(t_eops cmd, int n_cmd)
+static char		*print_cmd_name(t_eops cmd, int n_cmd)
 {
-	static const char *cmds[] = {"sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr",
-						"rra", "rrb", "rrr", "init"};
-	int i;
+	static const char	*cmds[] = {"sa", "sb", "ss", "pa", "pb", "ra", "rb",
+									"rr", "rra", "rrb", "rrr", "init"};
+	int					i;
 
 	if (cmd == INIT)
 		i = 11;
@@ -34,15 +32,14 @@ static char *print_cmd_name(t_eops cmd, int n_cmd)
 			i = 7;
 		else
 			i = cmd == ROT_A ? 5 : 6;
+	else if (cmd == RROT_R)
+		i = 10;
 	else
-		if (cmd == RROT_R)
-			i = 10;
-		else
-			i = cmd == RROT_A ? 8 : 9;
+		i = cmd == RROT_A ? 8 : 9;
 	ft_printf("Exec %s (%d):\n", cmds[i], n_cmd);
 }
 
-static int getcolpos(t_eops cmd)
+static int		getcolpos(t_eops cmd)
 {
 	int ret;
 
@@ -60,15 +57,14 @@ static int getcolpos(t_eops cmd)
 			ret = 2 * 5 * 3 * 7;
 		else
 			ret = cmd == ROT_A ? 2 * 5 : 3 * 7;
+	else if (cmd == RROT_R)
+		ret = 2 * 5 * 3 * 7;
 	else
-		if (cmd == RROT_R)
-			ret = 2 * 5 * 3 * 7;
-		else
-			ret = cmd == RROT_A ? 2 * 5 : 3 * 7;
+		ret = cmd == RROT_A ? 2 * 5 : 3 * 7;
 	return (ret);
 }
 
-void print_first(t_list **a, t_list **b, int colpos)
+void			print_first(t_list **a, t_list **b, int colpos)
 {
 	int i;
 
@@ -91,20 +87,20 @@ void print_first(t_list **a, t_list **b, int colpos)
 	}
 }
 
-static void print_else(t_list *a, t_list *b, int colpos)
+static void		print_else(t_list *a, t_list *b, int colpos)
 {
 	while (a || b)
 	{
 		if (a && !a->next && colpos % 5 == 0)
 			ft_printf("{Red}");
 		if (a)
-			ft_printf("%-12d{eof}", (int) a->data);
+			ft_printf("%-12d{eof}", (int)a->data);
 		else
 			ft_printf("%15c", ' ');
 		if (b && !b->next && colpos % 7 == 0)
 			ft_printf("{Red}");
 		if (b)
-			ft_printf("%-12d{eof}\n", (int) b->data);
+			ft_printf("%-12d{eof}\n", (int)b->data);
 		else
 			ft_printf("\n");
 		a = a ? (a)->next : a;
@@ -112,11 +108,11 @@ static void print_else(t_list *a, t_list *b, int colpos)
 	}
 }
 
-void	draw_stacks(t_mngr *mngr, t_eops cmd)
+void			draw_stacks(t_mngr *mngr, t_eops cmd)
 {
 	t_list	*a;
 	t_list	*b;
-	int colpos;
+	int		colpos;
 
 	if (!mngr->dbg)
 		return ;

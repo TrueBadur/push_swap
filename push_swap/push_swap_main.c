@@ -14,7 +14,7 @@
 
 #ifdef HIDDEN
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_mngr	mngr;
 
@@ -38,7 +38,7 @@ int main(int ac, char **av)
 
 #else
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_mngr	mngr;
 

@@ -77,6 +77,7 @@ typedef struct s_mngr
 	t_stk		*stk[2];
 	char		dbg;
 	unsigned	n_cmd;
+	char		*l_cmd;
 	t_btavl		*s_arr;
 }				t_mngr;
 

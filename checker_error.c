@@ -12,8 +12,7 @@
 
 #include "push_swap.h"
 
-
-void stk_del(t_stk *stk)
+void	stk_del(t_stk *stk)
 {
 	if (!stk)
 		return ;
@@ -21,24 +20,23 @@ void stk_del(t_stk *stk)
 	free(stk);
 }
 
-void help()
+void	help(void)
 {
 	ft_printf("Usage:\n./pushswap [-(file|debug|vis|color|bubble)]"
-			  "('number_to_be_sorted')|(numbers to be sorted)\n"
-	 "every flag should be given separately\n"
-  "-file should be the last one just before file name\n");
+"('number_to_be_sorted')|(numbers to be sorted)\n"
+"every flag should be given separately\n"
+"-file should be the last one just before file name\n");
 }
 
 /*
- *
- * @param stk - main t_stk which will be cleaned before exit or NULL
- * @param err - number of error from e_errors enum
- *
- * Prints error message to stderror, clean up and exit the program
- */
+** @param stk - main t_stk which will be cleaned before exit or NULL
+** @param err - number of error from e_errors enum
+** Prints error message to stderror, clean up and exit the program
+*/
 
 #ifdef HIDDEN
-void checker_error(t_mngr *mngr, int err)
+
+void	checker_error(t_mngr *mngr, int err)
 {
 	if (err != HELP_CALL)
 		ft_fdprintf(STDERR_FILENO, "Error\n");
@@ -59,8 +57,10 @@ void checker_error(t_mngr *mngr, int err)
 	ft_vecdel((void**)&mngr->vec);
 	exit(err);
 }
+
 #else
-void checker_error(t_mngr *mngr, int err)
+
+void	checker_error(t_mngr *mngr, int err)
 {
 	if (err != HELP_CALL)
 		ft_fdprintf(STDERR_FILENO, "Error\n");
@@ -76,7 +76,9 @@ void checker_error(t_mngr *mngr, int err)
 		ft_fdprintf(STDERR_FILENO, "%s\n", DUP_ARG_MSG);
 	stk_del(mngr->stk[0]);
 	stk_del(mngr->stk[1]);
+	free(mngr->l_cmd);
 	ft_avlfree(mngr->s_arr);
 	exit(err);
 }
+
 #endif

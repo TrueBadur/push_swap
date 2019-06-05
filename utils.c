@@ -12,13 +12,13 @@
 
 #include "push_swap.h"
 
-
 /*
 ** Compares first two elements in list
 ** @param lst - list in which to compare elements
 ** @return - 1, 0 or -1 if first element is greater, equal or less then second.
 ** If list is empty -5 is returned. If there is only one in list -6 is returned.
 */
+
 t_edir	cmp_first_two(t_list *lst)
 {
 	if (!lst)
@@ -42,7 +42,7 @@ t_edir	cmp_first_two(t_list *lst)
 ** (aka "rr") and negative otherwise (aka "rrr") and 0 if val is in place
 */
 
-int	val_to_place_dir_exist(t_stk *stk, int val, int place)
+int		val_to_place_dir_exist(t_stk *stk, int val, int place)
 {
 	int		i;
 	t_list	*lst;
@@ -58,20 +58,19 @@ int	val_to_place_dir_exist(t_stk *stk, int val, int place)
 	return (i);
 }
 
-int val_to_place_dir_nexis(t_stk *stk, int val)
+int		val_to_place_dir_nexis(t_stk *stk, int val)
 {
 	int		i;
 	t_list	*lst;
 
 	lst = stk->lst;
-
 	i = 0;
 	while (lst->next)
 	{
 		if ((val < stk->min && (int)lst->data == stk->min) ||
 			(val > stk->max && (int)lst->data == stk->min) ||
 			((int)lst->data > val && (int)stk->l_e->data < val))
-			break;
+			break ;
 		else if ((int)lst->data < val && (int)lst->next->data > val)
 		{
 			i++;
@@ -92,9 +91,9 @@ int val_to_place_dir_nexis(t_stk *stk, int val)
 ** @param final - if stack should be in the final state so that first el of the
 ** sequence should be at the first place
 ** @return 1 if list is sorted and 0 otherwise
-**/
+*/
 
-int check_sort(t_stk *stk, t_edir dir, int fin)
+int		check_sort(t_stk *stk, t_edir dir, int fin)
 {
 	t_list *lst;
 
@@ -105,10 +104,10 @@ int check_sort(t_stk *stk, t_edir dir, int fin)
 		if (cmp_first_two(lst) != dir && lst->next)
 		{
 			if (fin)
-				break;
+				break ;
 			if ((dir == DESC && (int)lst->data == stk->min &&
-				 (int)lst->next->data == stk->max) || (dir == ASC &&
-													   (int)lst->data == stk->max && (int)lst->next->data == stk->min))
+			(int)lst->next->data == stk->max) || (dir == ASC &&
+			(int)lst->data == stk->max && (int)lst->next->data == stk->min))
 				lst = lst->next;
 			else
 				break ;
@@ -118,7 +117,7 @@ int check_sort(t_stk *stk, t_edir dir, int fin)
 	if (lst->next)
 		return (0);
 	else if (fin || ((dir == ASC && (int)lst->data < (int)stk->lst->data) ||
-					 (dir == DESC && (int)lst->data > (int)stk->lst->data)))
+	(dir == DESC && (int)lst->data > (int)stk->lst->data)))
 		return (1);
 	return (0);
 }
