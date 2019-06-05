@@ -12,6 +12,8 @@
 
 #include "push_swap.h"
 
+#ifdef HIDDEN
+
 void	simple_split_stack(t_mngr *mngr)
 {
 	size_t tl;
@@ -109,3 +111,4 @@ void bin_merge(t_mngr *mngr)
 	sort_pairs(mngr);
 	merge_pairs(mngr, 2);
 }
+#endif
