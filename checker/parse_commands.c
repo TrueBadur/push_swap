@@ -54,5 +54,6 @@ void	parse_commands(t_mngr *mngr)
 			pushswap_exit(mngr, NOT_EXIST_INSTR);
 		if (mngr->dbg)
 			draw_stacks(mngr, str_to_op(mngr->l_cmd));
+		free(mngr->l_cmd);
 	}
 }

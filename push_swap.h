@@ -136,8 +136,15 @@ enum	e_errors
 #ifdef HIDDEN
 
 void safe_swap(t_mngr *mngr, t_eswopt mode, int piv);
-#endif
 void 		set_for_bub(t_mngr *mngr);
+void		bin_merge(t_mngr *mngr);
+void		double_bouble(t_mngr *mngr);
+void		set_sort_both(t_mngr *mngr);
+void	 	set_sort(t_stk *stk, t_edir dir, int val);
+void		smart_swap(t_mngr *mngr);
+void		safe_rotate(t_mngr *mngr, char c);
+int			get_sort(t_mngr *mngr);
+#endif
 void  		split_stack_inssort(t_mngr *mngr);
 t_vector 	*get_ops_seq(t_stk *stk_c, int num, t_vector *vec);
 int 		get_stk_n(t_stk *stk, t_vector **vec, int i);
@@ -145,31 +152,25 @@ void 		find_shortest(t_mngr *mngr, t_vector **vec, int i);
 void 		eval_seq(t_vector *vec, t_mngr *mngr);
 void		parse_nums(t_mngr *mngr, int ac, char **a, int skip);
 
-void	pushswap_exit(t_mngr *mngr, int err);
-void	parse_args(int ac, char **av, t_mngr *mngr);
-void	draw_stacks(t_mngr *mngr, t_eops cmd);
-void	gen_commands(t_mngr *mngr);
-void			swap(t_mngr *mngr, t_eops cmd);
-char			cmd_swap(t_mngr *mngr, const char *str);
-char 			cmd_rotate(t_mngr *mng, const char *str, int dir);
-void			rotate(t_mngr *mngr, t_eops cmd);
-char			cmd_push(t_mngr *mngr, const char *str);
-void			push(t_mngr *mngr, t_eops cmd);
-void	parse_commands(t_mngr *mngr);
-void	bin_merge(t_mngr *mngr);
-void	split_stack(t_mngr *mngr);
-void	double_bouble(t_mngr *mngr);
-t_edir 	cmp_first_two(t_list *lst);
-int		val_to_place_dir_exist(t_stk *stk, int val, int place);
-int check_sort(t_stk *stk, t_edir dir, int fin);
-void	set_sort_both(t_mngr *mngr);
-void set_sort(t_stk *stk, t_edir dir, int val);
-void smart_swap(t_mngr *mngr);
-void	safe_rotate(t_mngr *mngr, char c);
-int	get_sort(t_mngr *mngr);
-t_stk * rot_f(t_stk *stk, t_mngr *mngr);
-t_stk *rot_r(t_stk *stk, t_mngr *mngr);
-int val_to_place_dir_nexis(t_stk *stk, int val);
+void		pushswap_exit(t_mngr *mngr, int err);
+void		parse_args(int ac, char **av, t_mngr *mngr);
+void		draw_stacks(t_mngr *mngr, t_eops cmd);
+void		gen_commands(t_mngr *mngr);
+void		swap(t_mngr *mngr, t_eops cmd);
+char		cmd_swap(t_mngr *mngr, const char *str);
+char 		cmd_rotate(t_mngr *mng, const char *str, int dir);
+void		rotate(t_mngr *mngr, t_eops cmd);
+char		cmd_push(t_mngr *mngr, const char *str);
+void		push(t_mngr *mngr, t_eops cmd);
+void		parse_commands(t_mngr *mngr);
+void		split_stack(t_mngr *mngr);
+t_edir		cmp_first_two(t_list *lst);
+int			val_to_place_dir_exist(t_stk *stk, int val, int place);
+int			check_sort(t_stk *stk, t_edir dir, int fin);
+t_stk		*rot_f(t_stk *stk, t_mngr *mngr);
+t_stk		*rot_r(t_stk *stk, t_mngr *mngr);
+int			val_to_place_dir_nexis(t_stk *stk, int val);
+int			set_flags(char *arg, int *fd, char **av, t_mngr *mngr);
 
 
 

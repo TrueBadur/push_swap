@@ -27,66 +27,6 @@ void	init_stacks(t_mngr *mngr)
 	mngr->stk[1]->max = INT_MIN;
 }
 
-#ifdef HIDDEN
-
-int		set_flags(char *arg, int *fd, char **av, t_mngr *mngr)
-{
-	int ret;
-
-	ret = 1;
-	if (ft_strcmp(arg + 1, "help") == 0 || *(arg + 1) == 'h')
-		pushswap_exit(mngr, HELP_CALL);
-	else if (ft_strcmp(arg + 1, "file") == 0 || *(arg + 1) == 'f')
-	{
-		*fd = open(*(av + 1), O_RDONLY);
-		ret++;
-	}
-	else if (ft_strcmp(arg + 1, "sfile") == 0 || *(arg + 1) == 's')
-	{
-		mngr->fd = open(*(av + 1), mngr->tp == 'c' ? O_RDONLY : WRITE, CHMOD);
-		ret++;
-	}
-	else if (ft_strcmp(arg + 1, "debug") == 0 || *(arg + 1) == 'd')
-		mngr->dbg = 1;
-	else if (ft_strcmp(arg + 1, "result") == 0 || *(arg + 1) == 'r')
-		mngr->dbg = -1;
-	else if (ft_strcmp(arg + 1, "viz") == 0 || *(arg + 1) == 'v')
-		mngr->viz = 1;
-	else if (*(arg + 1) == 'b' || *(arg + 1) == 'm')
-		mngr->bub = *(arg + 1) == 'b' ? 1 : 2;
-	return (ret);
-}
-
-#else
-
-int		set_flags(char *arg, int *fd, char **av, t_mngr *mngr)
-{
-	int ret;
-
-	ret = 1;
-	if (ft_strcmp(arg + 1, "help") == 0 || *(arg + 1) == 'h')
-		pushswap_exit(mngr, HELP_CALL);
-	else if (ft_strcmp(arg + 1, "file") == 0 || *(arg + 1) == 'f')
-	{
-		*fd = open(*(av + 1), O_RDONLY);
-		ret++;
-	}
-	else if (ft_strcmp(arg + 1, "sfile") == 0 || *(arg + 1) == 's')
-	{
-		mngr->fd = open(*(av + 1), mngr->tp == 'c' ? O_RDONLY : WRITE, CHMOD);
-		ret++;
-	}
-	else if (ft_strcmp(arg + 1, "debug") == 0 || *(arg + 1) == 'd')
-		mngr->dbg = 1;
-	else if (ft_strcmp(arg + 1, "result") == 0 || *(arg + 1) == 'r')
-		mngr->dbg = -1;
-	else if (ft_strcmp(arg + 1, "viz") == 0 || *(arg + 1) == 'v')
-		mngr->viz = 1;
-	return (ret);
-}
-
-#endif
-
 int		read_flags(int ac, char **av, t_mngr *mngr, int *fd)
 {
 	char	*arg;
@@ -104,11 +44,33 @@ int		read_flags(int ac, char **av, t_mngr *mngr, int *fd)
 	return (i);
 }
 
+static void two_arg_handle(t_mngr *mngr, char **av, int fd, int skip)
+{
+	char	*str;
+	char 	**arr;
+	int i;
+
+	if (fd > 0)
+	{
+		get_next_line(fd, &str);
+		close(fd);
+	}
+	else
+		str = av[1 + skip];
+	arr = ft_strsplit(str, ' ');
+	parse_nums(mngr, 0, arr, 0);
+	i = -1;
+	while (arr[++i])
+		free(arr[i]);
+	free(arr);
+	if (fd > 0)
+		free(str);
+}
+
 void	parse_args(int ac, char **av, t_mngr *mngr)
 {
 	int		fd;
 	int		skip;
-	char	*str;
 
 	init_stacks(mngr);
 	fd = -2;
@@ -116,18 +78,7 @@ void	parse_args(int ac, char **av, t_mngr *mngr)
 	if (av[1][0] == '-')
 		skip = read_flags(ac, av, mngr, &fd);
 	if (ac - skip == 2 || ac - skip == 0)
-	{
-		if (fd > 0)
-		{
-			get_next_line(fd, &str);
-			close(fd);
-		}
-		else
-			str = av[1 + skip];
-		str = (char*)ft_strsplit(str, ' ');
-		ac = 0;
-		parse_nums(mngr, ac, (char**)str, 0);
-	}
+		two_arg_handle(mngr, av, fd, skip);
 	else
 		parse_nums(mngr, ac, av, skip);
 }

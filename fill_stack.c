@@ -13,6 +13,66 @@
 #include "push_swap.h"
 #include <limits.h>
 
+#ifdef HIDDEN
+
+int		set_flags(char *arg, int *fd, char **av, t_mngr *mngr)
+{
+	int ret;
+
+	ret = 1;
+	if (ft_strcmp(arg + 1, "help") == 0 || *(arg + 1) == 'h')
+		pushswap_exit(mngr, HELP_CALL);
+	else if (ft_strcmp(arg + 1, "file") == 0 || *(arg + 1) == 'f')
+	{
+		*fd = open(*(av + 1), O_RDONLY);
+		ret++;
+	}
+	else if (ft_strcmp(arg + 1, "sfile") == 0 || *(arg + 1) == 's')
+	{
+		mngr->fd = open(*(av + 1), mngr->tp == 'c' ? O_RDONLY : WRITE, CHMOD);
+		ret++;
+	}
+	else if (ft_strcmp(arg + 1, "debug") == 0 || *(arg + 1) == 'd')
+		mngr->dbg = 1;
+	else if (ft_strcmp(arg + 1, "result") == 0 || *(arg + 1) == 'r')
+		mngr->dbg = -1;
+	else if (ft_strcmp(arg + 1, "viz") == 0 || *(arg + 1) == 'v')
+		mngr->viz = 1;
+	else if (*(arg + 1) == 'b' || *(arg + 1) == 'm')
+		mngr->bub = *(arg + 1) == 'b' ? 1 : 2;
+	return (ret);
+}
+
+#else
+
+int		set_flags(char *arg, int *fd, char **av, t_mngr *mngr)
+{
+	int ret;
+
+	ret = 1;
+	if (ft_strcmp(arg + 1, "help") == 0 || *(arg + 1) == 'h')
+		pushswap_exit(mngr, HELP_CALL);
+	else if (ft_strcmp(arg + 1, "file") == 0 || *(arg + 1) == 'f')
+	{
+		*fd = open(*(av + 1), O_RDONLY);
+		ret++;
+	}
+	else if (ft_strcmp(arg + 1, "sfile") == 0 || *(arg + 1) == 's')
+	{
+		mngr->fd = open(*(av + 1), mngr->tp == 'c' ? O_RDONLY : WRITE, CHMOD);
+		ret++;
+	}
+	else if (ft_strcmp(arg + 1, "debug") == 0 || *(arg + 1) == 'd')
+		mngr->dbg = 1;
+	else if (ft_strcmp(arg + 1, "result") == 0 || *(arg + 1) == 'r')
+		mngr->dbg = -1;
+	else if (ft_strcmp(arg + 1, "viz") == 0 || *(arg + 1) == 'v')
+		mngr->viz = 1;
+	return (ret);
+}
+
+#endif
+
 static void		set_min_max(t_stk *stk, int val)
 {
 	stk->min = val < stk->min ? val : stk->min;
