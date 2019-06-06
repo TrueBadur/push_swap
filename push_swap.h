@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 05:30:53 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/04/05 05:30:53 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 02:09:37 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,18 @@
 # define DUP_ARG_MSG "Arguments can not duplicate"
 # define WRITE (O_WRONLY | O_CREAT | O_TRUNC)
 # define CHMOD (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)
+# define W_HEIGHT 1300
+# define W_WIDTH 1300
+# define X_PAD (W_WIDTH / 100)
+# define COL_WIDTH ((W_WIDTH - X_PAD * 4) / 2)
+# define Y_PAD (W_HEIGHT / 100)
+# define SPEED_STEP 25000
 
 
 # include <fcntl.h>
-#include <limits.h>
+# include <limits.h>
+# include <mlx.h>
+#include <time.h>
 # include "libft.h"
 
 
@@ -66,6 +74,15 @@ typedef enum	e_swap_opts
 
 # else
 
+typedef struct	s_mlx
+{
+	void *mlx;
+	void *win_ptr;
+	clock_t		interval;
+	char		pause;
+	clock_t		sleep;
+}				t_mlx;
+
 typedef struct	s_stacks
 {
 	t_list	*lst;
@@ -85,10 +102,10 @@ typedef struct s_mngr
 	char		*l_cmd;
 	unsigned	n_cmd;
 	t_btavl		*s_arr;
-
+	t_mlx		*mlx;
 }				t_mngr;
 
-#endif
+# endif
 
 typedef enum 	e_ops
 {
@@ -115,7 +132,31 @@ typedef enum 	e_dir
 	ONE_EL
 }				t_edir;
 
+enum	e_keys
+{
+	SPEED_INCREASE = 2,
+	SPEED_DECREASE = 0,
+	STEP_FORWARD = 36,
+	PAUSE = 49,
+	QUIT = 53
+};
 
+typedef struct	s_img
+{
+	void		*img_ptr;
+	char		*data;
+	int			bpp;
+	int			size_line;
+	int			endian;
+	t_uint2		res;
+	t_int2		pos;
+}				t_img;
+
+typedef struct	s_stk_img
+{
+	int		val;
+	t_img	*img;
+}				t_simg;
 
 enum	e_errors
 {
@@ -130,10 +171,12 @@ enum	e_errors
 	WRONG_INSTR,
 	INTERNAL_ERROR,
 	MEMORY_ALLOC_FAIL,
+	MLX_FAIL,
 	SORT_FAILED,
+	INTERUPTED
 };
 
-#ifdef HIDDEN
+# ifdef HIDDEN
 
 void safe_swap(t_mngr *mngr, t_eswopt mode, int piv);
 void 		set_for_bub(t_mngr *mngr);
@@ -144,7 +187,7 @@ void	 	set_sort(t_stk *stk, t_edir dir, int val);
 void		smart_swap(t_mngr *mngr);
 void		safe_rotate(t_mngr *mngr, char c);
 int			get_sort(t_mngr *mngr);
-#endif
+# endif
 void  		split_stack_inssort(t_mngr *mngr);
 t_vector 	*get_ops_seq(t_stk *stk_c, int num, t_vector *vec);
 int 		get_stk_n(t_stk *stk, t_vector **vec, int i);
@@ -162,7 +205,7 @@ char 		cmd_rotate(t_mngr *mng, const char *str, int dir);
 void		rotate(t_mngr *mngr, t_eops cmd);
 char		cmd_push(t_mngr *mngr, const char *str);
 void		push(t_mngr *mngr, t_eops cmd);
-void		parse_commands(t_mngr *mngr);
+int			parse_command(t_mngr *mngr);
 void		split_stack(t_mngr *mngr);
 t_edir		cmp_first_two(t_list *lst);
 int			val_to_place_dir_exist(t_stk *stk, int val, int place);
@@ -171,7 +214,8 @@ t_stk		*rot_f(t_stk *stk, t_mngr *mngr);
 t_stk		*rot_r(t_stk *stk, t_mngr *mngr);
 int			val_to_place_dir_nexis(t_stk *stk, int val);
 int			set_flags(char *arg, int *fd, char **av, t_mngr *mngr);
+void 		start_viz(t_mngr *mngr);
+void end_programm(t_mngr *mngr);
+int		getcolpos(t_eops cmd);
 
-
-
-#endif //PUSH_SWAP_PUSH_SWAP_MAIN_H
+#endif
