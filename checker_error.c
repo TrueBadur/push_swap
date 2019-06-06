@@ -1,22 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pushswap_exit.c                                    :+:      :+:    :+:   */
+/*   checker_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 17:52:59 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/04/01 17:52:59 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/06 23:01:12 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	stk_del(t_stk *stk)
+void	stk_del(t_stk *stk, t_mngr *mngr)
 {
+	t_list *lst;
+	t_list	*tmp;
+
 	if (!stk)
 		return ;
-	ft_lstdel(&stk->lst, NULL);
+	lst = stk->lst;
+	while (lst)
+	{
+		tmp = lst->next;
+		if (mngr->viz && lst->content_size > sizeof(int))
+		{
+			mlx_destroy_image(mngr->mlx->mlx, ((t_simg*)lst->data)->img->img_ptr);
+			free(((t_simg*)lst->data)->img);
+			free(lst->data);
+			free(lst);
+		}
+		else
+			ft_lstdelone(&lst, NULL);
+		lst = tmp;
+	}
 	free(stk);
 }
 
@@ -74,8 +91,13 @@ void	pushswap_exit(t_mngr *mngr, int err)
 		ft_fdprintf(STDERR_FILENO, "%s\n", INT_OVERFLOW_MSG);
 	else if (err == DUPLICTATE_ARG)
 		ft_fdprintf(STDERR_FILENO, "%s\n", DUP_ARG_MSG);
-	stk_del(mngr->stk[0]);
-	stk_del(mngr->stk[1]);
+	stk_del(mngr->stk[0], mngr);
+	stk_del(mngr->stk[1], mngr);
+	if (mngr->viz)
+	{
+		mlx_destroy_window(mngr->mlx->mlx, mngr->mlx->win_ptr);
+		free(mngr->mlx);
+	}
 	close(mngr->fd);
 	free(mngr->l_cmd);
 	ft_avlfree(mngr->s_arr);
