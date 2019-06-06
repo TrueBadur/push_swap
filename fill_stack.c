@@ -67,7 +67,7 @@ int		set_flags(char *arg, int *fd, char **av, t_mngr *mngr)
 	else if (ft_strcmp(arg + 1, "result") == 0 || *(arg + 1) == 'r')
 		mngr->dbg = -1;
 	else if (ft_strcmp(arg + 1, "viz") == 0 || *(arg + 1) == 'v')
-		mngr->viz = 1;
+		mngr->viz = mngr->tp == 'c' ? 1 : 0;
 	return (ret);
 }
 
