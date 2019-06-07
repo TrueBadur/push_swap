@@ -6,7 +6,7 @@
 /*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 05:30:53 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/06/07 02:09:37 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 14:23:43 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 # define X_PAD (W_WIDTH / 100)
 # define COL_WIDTH ((W_WIDTH - X_PAD * 4) / 2)
 # define Y_PAD (W_HEIGHT / 100)
-# define SPEED_STEP 25000
+# define SPEED 200000
+# define SPEED_STEP 20000
 
 
 # include <fcntl.h>
@@ -81,6 +82,7 @@ typedef struct	s_mlx
 	clock_t		interval;
 	char		pause;
 	clock_t		sleep;
+	char 		active;
 }				t_mlx;
 
 typedef struct	s_stacks
@@ -138,6 +140,7 @@ enum	e_keys
 	SPEED_DECREASE = 0,
 	STEP_FORWARD = 36,
 	PAUSE = 49,
+	ACTIVE = 1,
 	QUIT = 53
 };
 
@@ -149,7 +152,7 @@ typedef struct	s_img
 	int			size_line;
 	int			endian;
 	t_uint2		res;
-	t_int2		pos;
+	int			pos;
 }				t_img;
 
 typedef struct	s_stk_img
