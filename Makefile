@@ -12,10 +12,14 @@ LIB := ./libft/lib/libft.a
 LIBDIR = libft/
 LIBSPATH = -I libft/includes/ -I /usr/local/include/ -I ./
 HDR := ./push_swap.h
+VIZ =
 LINK = -lmlx -framework OpenGL -framework AppKit -L /usr/local/lib/
 
+viz: VIZ = -D VIZUALIZER
+viz: re
+
 %.o: %.c $(HDR) $(LIB)
-	$(CC) $(CFLAGS) $(LIBSPATH) -c $< -o $@
+	$(CC) $(CFLAGS) $(VIZ) $(LIBSPATH) -c $< -o $@
 
 all: lib $(NAME_CH) $(NAME_PS)
 
@@ -23,7 +27,7 @@ $(NAME_PS): $(OBJ_COMMON) $(OBJ_PUSHSWAP)
 	$(CC) $(CFLAGS) $(LIBSPATH) -o $(NAME_PS) $(LINK) $(LIB) $(OBJ_COMMON) $(OBJ_PUSHSWAP)
 
 $(NAME_CH): $(OBJ_COMMON) $(OBJ_CHECKER)
-	$(CC) $(CFLAGS) $(LIBSPATH) -o $(NAME_CH) $(LINK) $(LIB) $(OBJ_COMMON) $(OBJ_CHECKER)
+	$(CC) $(CFLAGS) $(LIBSPATH) $(VIZ) -o $(NAME_CH) $(LINK) $(LIB) $(OBJ_COMMON) $(OBJ_CHECKER)
 
 lib:
 	make -C $(LIBDIR)

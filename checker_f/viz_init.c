@@ -13,6 +13,8 @@
 
 #include "push_swap.h"
 
+#ifdef VIZUALIZER
+
 void	gradient_img (t_img * img, t_ucol4 start, t_ucol4 end, int n_el)
 {
 	int x;
@@ -239,3 +241,5 @@ void start_viz(t_mngr *mngr)
 	mngr->mlx->sleep = clock() + mngr->mlx->interval;
 	mlx_loop(mngr->mlx->mlx);
 }
+
+#endif

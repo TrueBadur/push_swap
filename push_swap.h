@@ -222,5 +222,6 @@ int			set_flags(char *arg, int *fd, char **av, t_mngr *mngr);
 void 		start_viz(t_mngr *mngr);
 void end_programm(t_mngr *mngr);
 int		getcolpos(t_eops cmd);
+void 	clean_all(t_mngr *mngr, int err);
 
 #endif
