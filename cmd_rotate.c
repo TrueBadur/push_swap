@@ -12,12 +12,12 @@
 
 #include "push_swap.h"
 
-t_stk * rot_f(t_stk *stk, t_mngr *mngr)
+t_stk *rot_f(t_stk *stk)
 {
 	t_list *tmp;
 
 	if (!stk || !stk->lst || !stk->l_e)
-		pushswap_exit(mngr, WRONG_INSTR);
+		return (stk);
 	if (stk->lst == stk->l_e)
 		return (stk);
 	tmp = stk->lst->next;
@@ -28,12 +28,12 @@ t_stk * rot_f(t_stk *stk, t_mngr *mngr)
 	return (stk);
 }
 
-t_stk *rot_r(t_stk *stk, t_mngr *mngr)
+t_stk *rot_r(t_stk *stk)
 {
 	t_list *tmp;
 
 	if (!stk || !stk->lst || !stk->l_e)
-		pushswap_exit(mngr, WRONG_INSTR);
+		return (stk);
 	if (stk->lst == stk->l_e)
 		return (stk);
 	tmp = stk->l_e;
@@ -59,14 +59,14 @@ char cmd_rotate(t_mngr *mng, const char *str, int dir)
 	if (*str == 'a' || *str == 'b' || *str == 'r')
 	{
 		if (*str == 'a' || *str == 'r')
-			mng->stk[0] = r ? rot_r(mng->stk[0], mng) : rot_f(mng->stk[0], mng);
+			mng->stk[0] = r ? rot_r(mng->stk[0]) : rot_f(mng->stk[0]);
 		if (*str == 'b' || *str == 'r')
-			mng->stk[1] = r ? rot_r(mng->stk[1], mng) : rot_f(mng->stk[1], mng);
+			mng->stk[1] = r ? rot_r(mng->stk[1]) : rot_f(mng->stk[1]);
 	}
 	else
-		pushswap_exit(mng, NOT_EXIST_INSTR);
+		pushswap_exit(mng, WRONG_INSTR);
 	if (*(str + 1))
-		pushswap_exit(mng, NOT_EXIST_INSTR);
+		pushswap_exit(mng, WRONG_INSTR);
 	if (mng->dbg)
 		draw_stacks(mng, ROT_A * !r + RROT_A * r + 2 * (*str == 'r') +
 		(*str == 'b'));

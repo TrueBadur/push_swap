@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_push.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 18:52:47 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/04/02 18:52:47 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 17:35:00 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ static int	fndmin(t_list *lst)
 	return (min);
 }
 
-static void	pushfirst(t_stk *from, t_stk *to, t_mngr *mngr)
+static void pushfirst(t_stk *from, t_stk *to)
 {
 	t_list *tmp;
 
 	if (!from->lst)
-		pushswap_exit(mngr, WRONG_INSTR);
+		return ;
 	tmp = from->lst->next;
 	from->lst->next = to->lst;
 	to->lst = from->lst;
@@ -62,13 +62,13 @@ char		cmd_push(t_mngr *mngr, const char *str)
 {
 	mngr->n_cmd++;
 	if (*str == 'a')
-		pushfirst(mngr->stk[1], mngr->stk[0], mngr);
+		pushfirst(mngr->stk[1], mngr->stk[0]);
 	else if (*str == 'b')
-		pushfirst(mngr->stk[0], mngr->stk[1], mngr);
+		pushfirst(mngr->stk[0], mngr->stk[1]);
 	else
-		pushswap_exit(mngr, NOT_EXIST_INSTR);
+		pushswap_exit(mngr, WRONG_INSTR);
 	if (*(str + 1))
-		pushswap_exit(mngr, NOT_EXIST_INSTR);
+		pushswap_exit(mngr, WRONG_INSTR);
 	if (mngr->dbg)
 		draw_stacks(mngr, PSH_A + (*str == 'b'));
 	return (mngr->dbg);

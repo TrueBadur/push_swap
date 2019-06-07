@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmds.c                                             :+:      :+:    :+:   */
+/*   cmd_swap.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:38:46 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/04/01 22:38:46 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 17:35:00 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static t_stk	*swp_first(t_stk *stk, t_mngr *mngr)
+static t_stk *swp_first(t_stk *stk)
 {
 	t_list	*tmp;
 
 	if (!stk->lst || !stk->lst->next)
-		pushswap_exit(mngr, WRONG_INSTR);
+		return (stk);
 	tmp = stk->lst->next;
 	stk->lst->next = stk->lst->next->next;
 	tmp->next = stk->lst;
@@ -33,14 +33,14 @@ char			cmd_swap(t_mngr *mngr, const char *str)
 	if (*str == 'a' || *str == 'b' || *str == 's')
 	{
 		if (*str == 'a' || *str == 's')
-			mngr->stk[0] = swp_first(mngr->stk[0], mngr);
+			mngr->stk[0] = swp_first(mngr->stk[0]);
 		if (*str == 'b' || *str == 's')
-			mngr->stk[1] = swp_first(mngr->stk[1], mngr);
+			mngr->stk[1] = swp_first(mngr->stk[1]);
 	}
 	else
-		pushswap_exit(mngr, NOT_EXIST_INSTR);
+		pushswap_exit(mngr, WRONG_INSTR);
 	if (*(str + 1))
-		pushswap_exit(mngr, NOT_EXIST_INSTR);
+		pushswap_exit(mngr, WRONG_INSTR);
 	if (mngr->dbg)
 		draw_stacks(mngr, SWP_A + (*str == 'b') + 2 * (*str == 's'));
 	return (mngr->dbg);
