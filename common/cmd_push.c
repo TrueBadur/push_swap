@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_push.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: ehugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 18:52:47 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/06/07 17:35:00 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 20:03:34 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	fndmin(t_list *lst)
 	return (min);
 }
 
-static void pushfirst(t_stk *from, t_stk *to)
+static void	pushfirst(t_stk *from, t_stk *to)
 {
 	t_list *tmp;
 

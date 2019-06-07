@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_stack.c                                       :+:      :+:    :+:   */
+/*   fill_stack.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 19:22:11 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/04/01 19:22:11 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 20:10:13 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #ifdef HIDDEN
 
-int		set_flags(char *arg, int *fd, char **av, t_mngr *mngr)
+int				set_flags(char *arg, int *fd, char **av, t_mngr *mngr)
 {
 	int ret;
 
@@ -45,7 +45,7 @@ int		set_flags(char *arg, int *fd, char **av, t_mngr *mngr)
 
 #else
 
-int		set_flags(char *arg, int *fd, char **av, t_mngr *mngr)
+int				set_flags(char *arg, int *fd, char **av, t_mngr *mngr)
 {
 	int ret;
 

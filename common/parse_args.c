@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: ehugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 19:22:11 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/06/07 17:19:59 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 20:02:36 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <limits.h>
 
-void	init_stacks(t_mngr *mngr)
+void		init_stacks(t_mngr *mngr)
 {
 	if (!(mngr->stk[0] = malloc(sizeof(t_stk))))
 		pushswap_exit(mngr, MEMORY_ALLOC_FAIL);
@@ -27,7 +27,7 @@ void	init_stacks(t_mngr *mngr)
 	mngr->stk[1]->max = INT_MIN;
 }
 
-int		read_flags(int ac, char **av, t_mngr *mngr, int *fd)
+int			read_flags(int ac, char **av, t_mngr *mngr, int *fd)
 {
 	char	*arg;
 	int		i;
@@ -44,11 +44,11 @@ int		read_flags(int ac, char **av, t_mngr *mngr, int *fd)
 	return (i);
 }
 
-static void two_arg_handle(t_mngr *mngr, char **av, int fd, int skip)
+static void	two_arg_handle(t_mngr *mngr, char **av, int fd, int skip)
 {
 	char	*str;
-	char 	**arr;
-	int i;
+	char	**arr;
+	int		i;
 
 	if (fd > 0)
 	{
@@ -67,7 +67,7 @@ static void two_arg_handle(t_mngr *mngr, char **av, int fd, int skip)
 		free(str);
 }
 
-void	parse_args(int ac, char **av, t_mngr *mngr)
+void		parse_args(int ac, char **av, t_mngr *mngr)
 {
 	int		fd;
 	int		skip;

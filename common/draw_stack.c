@@ -39,7 +39,7 @@ static void		print_cmd_name(t_eops cmd, int n_cmd)
 	ft_printf("Exec %s (%d):\n", cmds[i], n_cmd);
 }
 
-int		getcolpos(t_eops cmd)
+int				getcolpos(t_eops cmd)
 {
 	int ret;
 

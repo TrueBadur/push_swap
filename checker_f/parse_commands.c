@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: ehugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:09:28 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/06/07 02:34:11 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 20:05:52 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		parse_command(t_mngr *mngr)
 	if (!get_next_line(mngr->fd, &mngr->l_cmd))
 		return (0);
 	if (!mngr->l_cmd)
-		return -1;
+		return (-1);
 	if (*mngr->l_cmd == 's')
 		cmd_swap(mngr, mngr->l_cmd + 1);
 	else if (*mngr->l_cmd == 'p')

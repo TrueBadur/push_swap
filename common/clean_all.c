@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_all.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: ehugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 18:53:41 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/06/07 18:59:34 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 20:04:57 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 #ifdef VIZUALIZER
 
-static void		stk_del(t_stk *stk, t_mngr *mngr)
+static void	stk_del(t_stk *stk, t_mngr *mngr)
 {
-	t_list *lst;
+	t_list	*lst;
 	t_list	*tmp;
 
 	if (!stk)
@@ -27,7 +27,8 @@ static void		stk_del(t_stk *stk, t_mngr *mngr)
 		tmp = lst->next;
 		if (mngr->viz && lst->content_size > sizeof(int))
 		{
-			mlx_destroy_image(mngr->mlx->mlx, ((t_simg*)lst->data)->img->img_ptr);
+			mlx_destroy_image(mngr->mlx->mlx,
+					((t_simg*)lst->data)->img->img_ptr);
 			free(((t_simg*)lst->data)->img);
 			free(lst->data);
 			free(lst);
@@ -60,7 +61,7 @@ void		clean_all(t_mngr *mngr, int err)
 
 static void	stk_del(t_stk *stk, t_mngr *mngr)
 {
-	t_list *lst;
+	t_list	*lst;
 	t_list	*tmp;
 
 	if (!stk)

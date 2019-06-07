@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_swap.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: ehugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 22:38:46 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/06/07 17:35:00 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 20:05:23 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static t_stk *swp_first(t_stk *stk)
+static t_stk	*swp_first(t_stk *stk)
 {
 	t_list	*tmp;
 

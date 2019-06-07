@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   checker_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: ehugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 17:52:59 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/06/07 18:02:49 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 20:11:22 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-
 
 void	help(void)
 {
@@ -53,8 +51,6 @@ void	pushswap_exit(t_mngr *mngr, int err)
 }
 
 #else
-
-
 
 void	pushswap_exit(t_mngr *mngr, int err)
 {
