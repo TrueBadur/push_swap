@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehugh-be <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 19:22:11 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/04/01 19:22:11 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 17:19:59 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,12 @@ void	parse_args(int ac, char **av, t_mngr *mngr)
 	skip = 0;
 	if (av[1][0] == '-')
 		skip = read_flags(ac, av, mngr, &fd);
+	if (mngr->fd == -1 || fd == -1)
+		pushswap_exit(mngr, fd == -1 ? FILE_ERROR_N : FILE_ERROR_C);
 	if (ac - skip == 2 || ac - skip == 0)
 		two_arg_handle(mngr, av, fd, skip);
-	else
+	else if (fd == -2 && (mngr->fd < 2 && mngr->fd > -1))
 		parse_nums(mngr, ac, av, skip);
+	else
+		pushswap_exit(mngr, WRONG_ARG);
 }

@@ -86,7 +86,7 @@ static t_list	*instostk(t_stk *stk, char *str, char mode, t_mngr *mngr)
 	t_btavl	*t;
 
 	if ((err = ft_atoi_safe(str, &tmp)))
-		pushswap_exit(mngr, err < 0 ? INT_OVERFLOW_ARG : STR_ARG);
+		pushswap_exit(mngr, err < 0 ? INT_OVERFLOW_ARG : WRONG_ARG);
 	if ((t_btavl*)ft_avlsearch(mngr->s_arr, tmp, 0))
 		pushswap_exit(mngr, DUPLICTATE_ARG);
 	stk->lst_s++;
@@ -121,4 +121,6 @@ void			parse_nums(t_mngr *mngr, int ac, char **a, int skip)
 		while (ac-- > 1 + skip)
 			if (!(mngr->stk[0]->lst = instostk(mngr->stk[0], a[ac], 0, mngr)))
 				pushswap_exit(mngr, MEMORY_ALLOC_FAIL);
+	if (!mngr->stk[0]->lst)
+		pushswap_exit(mngr, NO_ARG);
 }

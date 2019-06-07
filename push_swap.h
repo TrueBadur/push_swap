@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   push_swap_f.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 05:30:53 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/06/07 14:23:43 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 14:25:29 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 #ifndef PUSH_SWAP_PUSH_SWAP_H
 # define PUSH_SWAP_PUSH_SWAP_H
 # define NO_ARG_MSG "You need to provide at least one numerical argument."
-# define STR_ARG_MSG "Arguments must be only numerical."
+# define STR_ARG_MSG "Wrong argument format. Check './push_swap -h' for help."
 # define INT_OVERFLOW_MSG "Arguments must fit into int."
 # define DUP_ARG_MSG "Arguments can not duplicate"
+# define FILE_ERROR_C_MSG "Can't open file given for commands."
+# define FILE_ERROR_N_MSG "Can't open file given for numbers."
 # define WRITE (O_WRONLY | O_CREAT | O_TRUNC)
 # define CHMOD (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH)
 # define W_HEIGHT 1300
@@ -166,11 +168,11 @@ enum	e_errors
 	SUCCESS,
 	HELP_CALL,
 	NO_ARG,
-	STR_ARG,
-	FILE_ERROR,
+	WRONG_ARG,
+	FILE_ERROR_N,
+	FILE_ERROR_C,
 	INT_OVERFLOW_ARG,
 	DUPLICTATE_ARG,
-	NOT_EXIST_INSTR,
 	WRONG_INSTR,
 	INTERNAL_ERROR,
 	MEMORY_ALLOC_FAIL,
@@ -213,8 +215,8 @@ void		split_stack(t_mngr *mngr);
 t_edir		cmp_first_two(t_list *lst);
 int			val_to_place_dir_exist(t_stk *stk, int val, int place);
 int			check_sort(t_stk *stk, t_edir dir, int fin);
-t_stk		*rot_f(t_stk *stk, t_mngr *mngr);
-t_stk		*rot_r(t_stk *stk, t_mngr *mngr);
+t_stk *rot_f(t_stk *stk);
+t_stk *rot_r(t_stk *stk);
 int			val_to_place_dir_nexis(t_stk *stk, int val);
 int			set_flags(char *arg, int *fd, char **av, t_mngr *mngr);
 void 		start_viz(t_mngr *mngr);
