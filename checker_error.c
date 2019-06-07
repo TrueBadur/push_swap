@@ -6,7 +6,7 @@
 /*   By: ehugh-be <ehugh-be@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 17:52:59 by ehugh-be          #+#    #+#             */
-/*   Updated: 2019/06/06 23:01:12 by ehugh-be         ###   ########.fr       */
+/*   Updated: 2019/06/07 18:01:58 by ehugh-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	pushswap_exit(t_mngr *mngr, int err)
 		help();
 	if (err == NO_ARG)
 		ft_fdprintf(STDERR_FILENO, "%s\n", NO_ARG_MSG);
-	else if (err == STR_ARG)
+	else if (err == WRONG_ARG)
 		ft_fdprintf(STDERR_FILENO, "%s\n", STR_ARG_MSG);
 	else if (err == INT_OVERFLOW_ARG)
 		ft_fdprintf(STDERR_FILENO, "%s\n", INT_OVERFLOW_MSG);
@@ -77,23 +77,13 @@ void	pushswap_exit(t_mngr *mngr, int err)
 
 #else
 
-void	pushswap_exit(t_mngr *mngr, int err)
+void 	clean_all(t_mngr *mngr, int err)
 {
-	if (err != HELP_CALL && err != SUCCESS)
-		ft_fdprintf(STDERR_FILENO, "Error\n");
-	else if (err == HELP_CALL)
-		help();
-	if (err == NO_ARG)
-		ft_fdprintf(STDERR_FILENO, "%s\n", NO_ARG_MSG);
-	else if (err == STR_ARG)
-		ft_fdprintf(STDERR_FILENO, "%s\n", STR_ARG_MSG);
-	else if (err == INT_OVERFLOW_ARG)
-		ft_fdprintf(STDERR_FILENO, "%s\n", INT_OVERFLOW_MSG);
-	else if (err == DUPLICTATE_ARG)
-		ft_fdprintf(STDERR_FILENO, "%s\n", DUP_ARG_MSG);
-	stk_del(mngr->stk[0], mngr);
-	stk_del(mngr->stk[1], mngr);
-	if (mngr->viz)
+	if (mngr->stk[0])
+		stk_del(mngr->stk[0], mngr);
+	if (mngr->stk[1])
+		stk_del(mngr->stk[1], mngr);
+	if (mngr->viz && mngr->mlx)
 	{
 		mlx_destroy_window(mngr->mlx->mlx, mngr->mlx->win_ptr);
 		free(mngr->mlx);
@@ -102,6 +92,26 @@ void	pushswap_exit(t_mngr *mngr, int err)
 	free(mngr->l_cmd);
 	ft_avlfree(mngr->s_arr);
 	exit(err);
+}
+
+void	pushswap_exit(t_mngr *mngr, int err)
+{
+	if (err != HELP_CALL && err != SUCCESS)
+		ft_fdprintf(STDERR_FILENO, "Error\n");
+	else if (err == HELP_CALL)
+		help();
+	if (err == NO_ARG)
+		ft_fdprintf(STDERR_FILENO, "%s\n", NO_ARG_MSG);
+	else if (err == WRONG_ARG)
+		ft_fdprintf(STDERR_FILENO, "%s\n", STR_ARG_MSG);
+	else if (err == INT_OVERFLOW_ARG)
+		ft_fdprintf(STDERR_FILENO, "%s\n", INT_OVERFLOW_MSG);
+	else if (err == DUPLICTATE_ARG)
+		ft_fdprintf(STDERR_FILENO, "%s\n", DUP_ARG_MSG);
+	else if (err == FILE_ERROR_C || err == FILE_ERROR_N)
+		ft_fdprintf(STDERR_FILENO, "%s\n", err == FILE_ERROR_C ?
+		FILE_ERROR_C_MSG : FILE_ERROR_N_MSG);
+	clean_all(mngr, err);
 }
 
 #endif
