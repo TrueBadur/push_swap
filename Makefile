@@ -1,6 +1,6 @@
 NAME_PS = push_swap
 NAME_CH = checker
-SRC_COMMON = $(wildcard *.c)
+SRC_COMMON = $(wildcard common/*.c)
 SRC_CHECKER = $(wildcard checker_f/*.c)
 SRC_PUSHSWAP = $(wildcard push_swap_f/*.c)
 OBJ_COMMON=$(SRC_COMMON:.c=.o)
