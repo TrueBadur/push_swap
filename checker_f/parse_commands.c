@@ -45,15 +45,15 @@ int		parse_command(t_mngr *mngr)
 	if (!mngr->l_cmd)
 		return -1;
 	if (*mngr->l_cmd == 's')
-		mngr->dbg *= cmd_swap(mngr, mngr->l_cmd + 1);
+		cmd_swap(mngr, mngr->l_cmd + 1);
 	else if (*mngr->l_cmd == 'p')
-		mngr->dbg *= cmd_push(mngr, mngr->l_cmd + 1);
+		cmd_push(mngr, mngr->l_cmd + 1);
 	else if (*mngr->l_cmd == 'r')
-		mngr->dbg *= cmd_rotate(mngr, mngr->l_cmd + 1, 0);
+		cmd_rotate(mngr, mngr->l_cmd + 1, 0);
 	else if (*mngr->l_cmd == '\0')
 		return (0);
 	else
-		pushswap_exit(mngr, NOT_EXIST_INSTR);
+		pushswap_exit(mngr, WRONG_INSTR);
 	cmd = str_to_op(mngr->l_cmd);
 	if (mngr->dbg)
 		draw_stacks(mngr, cmd);
